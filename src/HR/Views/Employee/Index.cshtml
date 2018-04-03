@@ -1,0 +1,600 @@
+﻿@{
+    Layout = "_Layout";
+}
+@using HR.Models
+<style>
+.panel {
+box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.18);
+}
+tfoot input::-webkit-input-placeholder {
+    font-size: 12px;
+    line-height: 3;
+}
+    .select2 {
+    
+    height: 35px;
+    
+    }
+</style>
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">พนักงาน</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-sm-12 text-right">
+                @*<a class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> เพิ่มพนักงาน</a>*@
+                <a class="btn btn-primary" data-toggle="modal" data-target="#myModal1"><i class="fa fa-plus"></i> เพิ่มพนักงาน(ใหม่)</a>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        พนักงาน
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="table-responsive">
+                                   <table id="datatable" class="table dataTable table-bordered table-responsive" style="width:100%">
+                                       <thead>
+                                           <tr>
+                                               <th class="text-center">ลำดับ</th>
+                                               <th class="text-center">รหัสพนักงาน</th>
+                                               <th class="text-center">ชื่อ-นามสกุล</th>
+                                               <th class="text-center">ตำแหน่ง</th>
+                                               <th class="text-center">แผนก</th>
+                                               <th class="text-center">ฝ่าย</th>
+                                               <th class="text-center">บริษัท</th>
+                                               <th class="text-center">ประเภท</th>
+                                               <th class="text-center">สถานะ</th>
+                                               <th class="text-center">จัดการ</th>
+                                           </tr>
+                                       </thead>
+                                       <tfoot>
+                                           <tr>
+                                               <th class="no">ลำดับ</th>
+                                               <th class="code">รหัสพนักงาน</th>
+                                               <th class="name">ชื่อ-นามสกุล</th>
+                                               <th class="position">ตำแหน่ง</th>
+                                               <th class="dept">แผนก</th>
+                                               <th class="section">ฝ่าย</th>
+                                               <th class="comp">บริษัท</th>
+                                               <th class="type">ประเภท</th>
+                                               <th class="status">สถานะ</th>
+                                               <th class="manage">จัดการ</th>
+                                           </tr>
+                                       </tfoot>
+                                       <tbody class="text-center">
+                                        @{ int i = 1; }
+                                        @foreach (var item in ViewData["emp_data"] as List<view_employeeModel>)
+                                        {
+                                           <tr>
+                                               <td>@i</td>
+                                               <td>@item.ep_code</td>
+                                               <td>@item.ps_name_full</td>
+                                               <td>@item.post_name
+                                               @if(item.position_active == "Y")
+                                               {
+                                                   <br />
+                                                   <p>(ตำแหน่งหลัก)</p>
+
+                                               }
+
+                                               </td>
+                                               <td>@item.dept_name</td>
+                                               <td>@item.Section_name</td>
+                                               <td>@item.T_Company</td>
+                                               <td>
+                                                   @if (item.type_name == "รายวัน")
+                                                   {
+                                                    <a class="btn btn-info">@item.type_name</a>
+
+                                                   }
+                                                   else if (item.type_name == "รายเดือน")
+                                                   {
+
+                                                    <a class="btn btn-primary">@item.type_name</a>
+                                                   }
+                                                   else if (item.type_name == "ชั่วคราว")
+                                                   {
+
+                                                    <a class="btn btn-warning">@item.type_name</a>
+                                                   }
+
+                                               </td>
+                                               <td>
+                                                   @if (item.ep_status == "ดำเนินการ")
+                                                   {
+                                                   <a class="btn btn-success"><i class="fa fa-user"></i> @item.ep_status</a>
+                                                   }
+                                                   else if (item.ep_status == "ลาออก")
+                                                   {
+
+                                                    <a class="btn btn-danger"><i class="fa fa-user"></i> @item.ep_status</a>
+
+                                                   }else
+                                                   {
+
+                                                   <a class="btn btn-warning"><i class="fa fa-user"></i> @item.ep_status</a>
+                                                   }
+
+
+                                               </td>
+                                               <td>
+                                                   <a href="@Url.Action("viewEmp","Employee",new {code = item.ep_id})" class="btn btn-primary"><i class="fa fa-search"></i> </a>
+                                                   <a href="@Url.Action("emp","Employee",new { code = item.ep_id})" class="btn btn-warning"><i class="fa fa-edit"></i> </a>
+                                                   <a class="btn btn-danger"><i class="fa fa-trash-o"></i> </a>
+
+                                               </td>
+                                           </tr>
+                                            i++;
+                                        }
+                                          
+                                       </tbody>
+                                   </table>
+                                   </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*@{ Html.BeginForm("insertEmp", "Employee", FormMethod.Post);}
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">คำนำหน้าชื่อ</h4>
+            </div>
+            <div class="modal-body">
+                @*<div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            รหัสพนักงาน
+                        </div>
+                        <div class="col-sm-10">
+                            @Html.TextBox("code", "", new { @class = "form-control", @readonly = "true" })
+                        </div>
+                    </div>
+                </div>*@
+               
+                @*ชื่อ-นามสกุล ภาษาไทย
+                <hr />
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            คำนำหน้า
+                        </div>
+                        <div class="col-sm-2">
+                            @Html.DropDownList("prefix_th", ViewData["prefix_th"] as List<SelectListItem>, new { @class = "form-control" })
+                            
+                        </div>
+                        <div class="col-sm-1">
+                            ชื่อ
+                        </div>
+                        <div class="col-sm-3">
+                            @Html.TextBox("name_th", "", new { @class = "form-control" })
+                        </div>
+                        <div class="col-sm-1">
+                            นามสกุล
+                        </div>
+                        <div class="col-sm-3">
+                            @Html.TextBox("last_th", "", new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                ชื่อ-นามสกุล ภาษาอังกฤษ
+                <hr />
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            คำนำหน้า
+                        </div>
+                        <div class="col-sm-2">
+                            @Html.DropDownList("prefix_en", ViewData["prefix_en"] as List<SelectListItem>, new { @class = "form-control" })
+                        </div>
+                        <div class="col-sm-1">
+                            ชื่อ
+                        </div>
+                        <div class="col-sm-3">
+                            @Html.TextBox("name_en", "", new { @class = "form-control" })
+                        </div>
+                        <div class="col-sm-1">
+                            นามสกุล
+                        </div>
+                        <div class="col-sm-3">
+                            @Html.TextBox("last_en", "", new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            ประเภทพนักงาน
+                        </div>
+                        <div class="col-sm-4">
+                            @Html.DropDownList("type", ViewData["type"] as List<SelectListItem>, new{@class="form-control" })
+                        </div>
+                        <div class="col-sm-2">
+                            สถานะการทำงาน
+                        </div>
+                        <div class="col-sm-4">
+                            @Html.DropDownList("status", ViewData["status"] as List<SelectListItem>, new { @class="form-control"})
+                    
+                        </div>
+                     </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            วันที่เริ่มงาน
+                        </div>
+                        <div class="col-sm-4">
+                            @Html.TextBox("start", "", new { @class = "form-control datepicker" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            ผู้บันทึกข้อมูล
+                        </div>
+                        <div class="col-sm-10">
+                            @Html.TextBox("admin", "ขวัญฤทัย  เสมอกลาง", new { @class = "form-control", @readonly = "true" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer text-center">
+                <div class="text-center">
+                    <input type="submit" class="btn btn-primary" value="บันทึกข้อมูล" />
+                    <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+         
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@{ Html.EndForm();}*@
+@{ Html.BeginForm("addEmp", "Employee", FormMethod.Post);}
+<div class="modal fade" id="myModal1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">เพิ่มพนักงาน</h4>
+            </div>
+            <div class="modal-body">
+               เลือกข้อมูลส่วนบุคคล โดยค้นหาจากเลขประจำตัวประชาชน หรือ ชื่อ-นามสกุล
+                <hr />
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-2">
+                             เลขประจำตัวประชาชน
+                        </div>
+                        <div class="col-sm-4">
+                            @Html.DropDownList("national_id", ViewData["national_id"] as List<SelectListItem>, new { @class = "form-control select2", @style = "width:100%", @onchange = "myFunctionNational()" })
+                        </div>
+                        <div class="col-sm-2">
+                            ชื่อ-นามสกุล
+                        </div>
+                        <div class="col-sm-4">
+                            @Html.DropDownList("personal_name", ViewData["personal_name"] as List<SelectListItem>, new { @class = "form-control select2", @style = "width:100%", @onchange = "myFunctionPersonal()" })
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            เลขประจำตัวประชานชน
+                        </div>
+                        <div class="col-sm-5">
+                            @Html.TextBox("national", "", new { @class = "form-control", @readonly = "true" })
+                            @Html.TextBox("ps_id", "", new { @class = "form-control", @readonly = "true", @type = "hidden" })
+                        </div>
+                    </div>
+                </div>
+               <div class="form-group">
+                   <div class="row">
+                       <div class="col-sm-2">
+                           คำนำหน้า
+                       </div>
+                       <div class="col-sm-5">
+                           @Html.TextBox("prefix_th", "", new { @class = "form-control", @readonly = "true" })
+                       </div>
+                       <div class="col-sm-5">
+                           @Html.TextBox("prefix_en", "", new { @class = "form-control", @readonly = "true" })
+                       </div>
+                   </div>
+               </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            ชื่อ-นามสกุล
+                        </div>
+                        <div class="col-sm-5">
+                            @Html.TextBox("name_th", "", new { @class = "form-control", @readonly = "true" })
+                        </div>
+                        <div class="col-sm-5">
+                            @Html.TextBox("name_en", "", new { @class = "form-control", @readonly = "true" })
+                        </div>
+                    </div>
+                </div>
+               
+                <hr />
+               ข้อมูลพนักงาน
+                <hr />
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            ตำแหน่ง
+                        </div>
+                        <div class="col-sm-4">
+                            @Html.DropDownList("position", ViewData["position"] as List<SelectListItem>, new { @class = "form-control select2",@style="width:100%" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            บริษัท
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="dropComp"> @Html.DropDownList("company", ViewData["company"] as List<SelectListItem>, new { @class = "form-control select2", @style = "width:100%" ,@onchange= "myFunctionCompany()" })</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            ฝ่าย
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="dropSect"> 
+                                @Html.DropDownList("section", ViewData["section"] as List<SelectListItem>, new { @class = "form-control select2", @style = "width:100%", @onchange = "myFunctionSection()" })
+                              
+                            </div>
+                            @Html.TextBox("txtsection", "", new { @class = "form-control",@type="hidden" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            แผนก
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="dropDept">
+                                @Html.DropDownList("department", ViewData["department"] as List<SelectListItem>, new { @class = "form-control select2", @style = "width:100%" })
+                         
+                            </div>
+                            @Html.TextBox("txtdepartment", "", new { @class = "form-control", @type = "hidden" })
+                            </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            ประเภทพนักงาน
+                        </div>
+                        <div class="col-sm-4">
+                            @Html.DropDownList("type", ViewData["type"] as List<SelectListItem>, new { @class = "form-control", @style = "width:100%" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            วันที่เริ่มงาน
+                        </div>
+                        <div class="col-sm-4">
+                            @Html.TextBox("start", "", new { @class = "form-control datepicker" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            ผู้บันทึกข้อมูล
+                        </div>
+                        <div class="col-sm-10">
+                            @Html.TextBox("admin", "ขวัญฤทัย  เสมอกลาง", new { @class = "form-control", @readonly = "true" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer text-center">
+                <div class="text-center">
+                    <input type="submit" class="btn btn-primary submitemp" value="บันทึกข้อมูล" />
+                    <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@{ Html.EndForm();}
+<script src="~/lib/jquery/dist/jquery-3.2.1.min.js"></script>
+<script>
+    $(document).on('keyup change keydown changeDate', '#start', function () {
+
+        alert($('#start').val());
+
+    })
+</script>
+<script>
+    $(document).ready(function () {
+
+        $('.select2').select2();
+        // Setup - add a text input to each footer cell
+        $('#datatable tfoot th').each(function () {
+            var title = $(this).text();
+            var class_ = $(this).attr('class');
+            if (class_ == "no") {
+                $(this).html('<input type="hidden" class="form-control ' + class_ + ' responsive" placeholder="ค้นหา ' + title + '" style="width:95px"/>');
+            } else if(class_ == "code") {
+
+                $(this).html('<input type="text" class="form-control ' + class_ + ' responsive" placeholder="ค้นหา ' + title + '" style="width:133px"/>');
+            }
+            else if (class_ == "name") {
+
+                $(this).html('<input type="text" class="form-control ' + class_ + ' responsive" placeholder="ค้นหา ' + title + '" style="width:133px"/>');
+            }
+            else if (class_ == "position") {
+
+              $(this).html('<select class="form-control select2 responsive psoption" style="width:133px"><option></option>"@Html.Raw(ViewData["option_position"])"</select>');
+                $('.psoption').select2();
+            }
+            else if (class_ == "dept") {
+
+                $(this).html('<select class="form-control select2 responsive deptoption" style="width:133px"><option></option>"@Html.Raw(ViewData["option_department"])"</select>');
+                $('.deptoption').select2();
+            }
+            else if (class_ == "section") {
+
+                $(this).html('<select class="form-control select2 responsive sectoption" style="width:133px"><option></option>"@Html.Raw(ViewData["option_section"])"</select>');
+                $('.sectoption').select2();
+            }
+            else if (class_ == "comp") {
+
+                $(this).html('<select class="form-control responsive compoption" style="width: 172px;"><option></option>"@Html.Raw(ViewData["option_company"])"</select>');
+                $('.compoption').select2();
+            }
+            else if (class_ == "type") {
+
+                $(this).html('<select class="form-control responsive typeoption" style="width:133px"><option></option>"@Html.Raw(ViewData["option_type"])"</select>');
+                $('.typeoption').select2();
+            }
+            else if (class_ == "status") {
+
+                $(this).html('<select class="form-control responsive statusoption" style="width:133px"><option></option>"@Html.Raw(ViewData["option_status"])"</select>');
+                $('.statusoption').select2();
+            }
+            else if (class_ == "manage") {
+
+                $(this).html('<input type="hidden" class="form-control responsive ' + class_ + '" placeholder="ค้นหา ' + title + '" style="width:133px"/>');
+            }
+
+        });
+
+        // DataTable
+        var table = $('#datatable').DataTable();
+
+        // Apply the search
+        table.columns().every(function () {
+            var that = this;
+
+            $('input', this.footer()).on('keyup change', function () {
+                if (that.search() !== this.value) {
+                    that
+                        .search(this.value)
+                        .draw();
+                }
+            });
+            $('select', this.footer()).on('change', function () {
+
+                if (that.search() !== this.value) {
+                    that
+                        .search(this.value)
+                        .draw();
+                }
+            });
+        });
+    });
+</script>
+<script>
+    function myFunctionNational() {
+
+        var x = document.getElementById("national_id").value;
+
+        $('#ps_id').val(x);
+
+        $.get('../Employee/getPerson?id=' + x, function (data) {
+
+            var res = data.split('^');
+
+            $('#national').val(res[0]);
+            $('#prefix_th').val(res[1]);
+            $('#prefix_en').val(res[2]);
+            $('#name_th').val(res[3]);
+            $('#name_en').val(res[4]);
+
+
+        })
+
+    }
+    function myFunctionPersonal() {
+
+        var x = document.getElementById("personal_name").value;
+
+        $('#ps_id').val(x);
+
+        $.get('../Employee/getPerson?id=' + x, function (data) {
+
+            var res = data.split('^');
+
+            $('#national').val(res[0]);
+            $('#prefix_th').val(res[1]);
+            $('#prefix_en').val(res[2]);
+            $('#name_th').val(res[3]);
+            $('#name_en').val(res[4]);
+
+        })
+
+    }
+</script>
+<script>
+    function myFunctionCompany() {
+
+        var x = document.getElementById("company").value;
+
+        $.get('../DepartmentList/getSection?comp=' + x, function (data) {
+
+            $('.dropSect').html('');
+            $('.dropSect').html('<select id="section" class="form-control select2" onchange="myFunctionSection()">' + data + '</select>');
+            $('#section').select2();
+      
+        })
+
+    };
+
+    function myFunctionSection() {
+
+        var x = document.getElementById("section").value;
+        var x2 = document.getElementById("company").value;
+        $.get('../DepartmentList/getDept?comp=' + x2 + '&sect=' + x, function (data) {
+
+            $('.dropDept').html('');
+            $('.dropDept').html('<select id="department" class="form-control select2">' + data + '</select>');
+            $('#department').select2();
+
+        })
+
+
+    };
+    $(document).on('click', '.submitemp', function () {
+
+
+        var x = document.getElementById("section").value;
+        var x2 = document.getElementById("department").value;
+
+        $('#txtsection').val(x);
+        $('#txtdepartment').val(x2);
+
+    })
+</script>

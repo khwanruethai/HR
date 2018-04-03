@@ -1,0 +1,2470 @@
+﻿@{
+    Layout = "_Layout";
+}
+<style>
+    .wizard {
+        margin: 20px auto;
+        background: #fff;
+    }
+
+        .wizard .nav-tabs {
+            position: relative;
+            margin: 40px auto;
+            margin-bottom: 0;
+            border-bottom-color: #e0e0e0;
+        }
+
+        .wizard > div.wizard-inner {
+            position: relative;
+        }
+
+    .connecting-line {
+        height: 2px;
+        background: #e0e0e0;
+        position: absolute;
+        width: 80%;
+        margin: 0 auto;
+        left: 0;
+        right: 0;
+        top: 50%;
+        z-index: 1;
+    }
+
+    .wizard .nav-tabs > li.active > a, .wizard .nav-tabs > li.active > a:hover, .wizard .nav-tabs > li.active > a:focus {
+        color: #555555;
+        cursor: default;
+        border: 0;
+        border-bottom-color: transparent;
+    }
+
+    span.round-tab {
+        width: 70px;
+        height: 70px;
+        line-height: 70px;
+        display: inline-block;
+        border-radius: 100px;
+        background: #fff;
+        border: 2px solid #e0e0e0;
+        z-index: 2;
+        position: absolute;
+        left: 0;
+        text-align: center;
+        font-size: 25px;
+    }
+
+        span.round-tab i {
+            color: #555555;
+        }
+
+    .wizard li.active span.round-tab {
+        background: #fff;
+        border: 2px solid #5bc0de;
+    }
+
+        .wizard li.active span.round-tab i {
+            color: #5bc0de;
+        }
+
+    span.round-tab:hover {
+        color: #333;
+        border: 2px solid #333;
+    }
+
+    .wizard .nav-tabs > li {
+        width: 10%;
+    }
+
+    .wizard li:after {
+        content: " ";
+        position: absolute;
+        left: 46%;
+        opacity: 0;
+        margin: 0 auto;
+        bottom: 0px;
+        border: 5px solid transparent;
+        border-bottom-color: #5bc0de;
+        transition: 0.1s ease-in-out;
+    }
+
+    .wizard li.active:after {
+        content: " ";
+        position: absolute;
+        left:  60%;/*46%;*/
+        opacity: 1;
+        margin: 0 auto;
+        bottom: 0px;
+        border: 10px solid transparent;
+        border-bottom-color: #5bc0de;
+    }
+
+    .wizard .nav-tabs > li a {
+        width: 5px;/*70px;*/
+        height: 70px;
+        margin: 20px auto;
+        border-radius: 100%;
+        padding: 0;
+    }
+
+        .wizard .nav-tabs > li a:hover {
+            background: transparent;
+        }
+
+    .wizard .tab-pane {
+        position: relative;
+        padding-top: 50px;
+    }
+
+    .wizard h3 {
+        margin-top: 0;
+    }
+
+    .container {
+        width: 100% !important;
+    }
+
+    @@media( max-width : 100% ) {
+        .container {
+            width: 100% !important;
+        }
+
+        .wizard {
+            width: 90%;
+            height: auto !important;
+        }
+
+        span.round-tab {
+            font-size: 16px;
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+        }
+
+        .wizard .nav-tabs > li a {
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+        }
+
+        .wizard li.active:after {
+            content: " ";
+            position: absolute;
+            left: 35%;
+        }
+    }
+</style>
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">เพิ่มรายชื่อบุคคล</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!---wizard--->
+    <div class="container">
+        <div class="form-group">
+            <div class="row">
+                <section>
+                    <div class="wizard">
+                        <div class="wizard-inner">
+
+                            <div class="connecting-line"></div>
+                            <ul class="nav nav-tabs" role="tablist">
+
+                                <li role="presentation" class="active text-right">
+                                    <a href="#step1" data-toggle="tab" aria-controls="step1" role="tab" title="Step 1">
+                                        <span class="round-tab">
+                                            <i class="glyphicon glyphicon-user"></i>
+                                        </span>
+                                        <br />
+                                    </a>
+                                    <h4>ข้อมูลส่วนตัว</h4>
+                                </li>
+
+                                <li role="presentation" class="disabled text-right">
+                                    <a href="#step2" data-toggle="tab" aria-controls="step2" role="tab" title="Step 2">
+                                        <span class="round-tab">
+                                            <i class="glyphicon glyphicon-home"></i>
+                                        </span>
+                                    </a>
+                                    <h4>ข้อมูลที่อยู่</h4>
+                                </li>
+                                <li role="presentation" class="disabled text-right">
+                                    <a href="#step3" data-toggle="tab" aria-controls="step3" role="tab" title="Step 3">
+                                        <span class="round-tab">
+                                            <i class="glyphicon glyphicon-earphone"></i>
+                                        </span>
+                                    </a>
+                                    <h4>ข้อมูลการติดต่อ</h4>
+                                </li>
+                                <li role="presentation" class="disabled text-right">
+                                    <a href="#step4" data-toggle="tab" aria-controls="step4" role="tab" title="Step 4">
+                                        <span class="round-tab">
+                                            <i class="fa fa-group"></i>
+                                        </span>
+                                    </a>
+                                    <h4>สถานะทางครอบครัว</h4>
+                                </li>
+                                <li role="presentation" class="disabled text-right">
+                                    <a href="#step5" data-toggle="tab" aria-controls="step5" role="tab" title="Step 5">
+                                        <span class="round-tab">
+                                            <i class="fa fa-group"></i>
+                                        </span>
+                                    </a>
+                                    <h4>ข้อมูลบุตร</h4>
+                                </li>
+                                <li role="presentation" class="disabled text-right">
+                                    <a href="#step6" data-toggle="tab" aria-controls="step6" role="tab" title="Step 6">
+                                        <span class="round-tab">
+                                            <i class="glyphicon glyphicon-education"></i>
+                                        </span>
+                                    </a>
+                                    <h4>ประวัติการศึกษา</h4>
+                                </li>
+                                <li role="presentation" class="disabled text-right">
+                                    <a href="#step7" data-toggle="tab" aria-controls="step7" role="tab" title="Step 7">
+                                        <span class="round-tab">
+                                            <i class="glyphicon glyphicon-folder-open"></i>
+                                        </span>
+                                    </a>
+                                    <h4>ประวัติการผ่านงาน</h4>
+                                </li>
+                                <li role="presentation" class="disabled text-right">
+                                    <a href="#step8" data-toggle="tab" aria-controls="step8" role="tab" title="Step 8">
+                                        <span class="round-tab">
+                                            <i class="glyphicon glyphicon-folder-open"></i>
+                                        </span>
+                                    </a>
+                                    <h4>ประวัติการฝึกอบรม</h4>
+                                </li>
+
+                                <li role="presentation" class="disabled text-right">
+                                    <a href="#complete" data-toggle="tab" aria-controls="complete" role="tab" title="Complete">
+                                        <span class="round-tab">
+                                            <i class="glyphicon glyphicon-ok"></i>
+                                        </span>
+                                    </a>
+                                    <h4>เสร็จสมบูรณ์</h4>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div role="form">
+                            <div class="tab-content">
+                                @*@{Html.BeginForm("InsertPersonal", "", FormMethod.Post);}*@
+                                <div class="tab-pane active responsive" role="tabpanel" id="step1" style="margin: 0% 7% 0% 5%;">
+                                   @*@{ Html.BeginForm("insertPersonal", "Personal", FormMethod.Post);}*@
+                                     <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                               [ ภาษาไทย ]
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                คำนำหน้า
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.DropDownList("prefix_th",ViewData["prefix_th"] as List<SelectListItem>, new { @class = "form-control" })
+                                              
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                           
+                                            <div class="col-md-2">
+                                                ชื่อ
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("name_th", ViewData["test"], new { @class = "form-control" })
+                                               
+                                            </div>
+                                            <div class="col-md-2">
+                                                นามสกุล
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("lastname_th", "", new { @class = "form-control" })
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="row">
+                                            <span><label class="checkname"></label></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                [ ภาษาอังกฤษ ]
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                คำนำหน้า
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.DropDownList("prefix_en", ViewData["prefix_en"] as List<SelectListItem>, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                ชื่อ
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("name_en", ViewData["test"], new { @class = "form-control" })
+                                            </div>
+                                            <div class="col-md-2">
+                                                นามสกุล
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("lastname_en", "", new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                เพศ
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.DropDownList("gender", new List<SelectListItem> { new SelectListItem { Text = "ชาย" }, new SelectListItem { Text = "หญิง" } }, new { @class = "form-control" })
+                                            </div>
+                                            <div class="col-md-2">
+                                                กรุ๊ปเลือด
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("blood", "", new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                               เลขประจำตัวประชาชน
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("national_id", "", new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                วันที่ออกบัตร
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("national_start", "", new { @class = "form-control datepicker_normal" })
+                                            </div>
+                                            <div class="col-md-2">
+                                                วันหมดอายุ
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("national_end", "", new { @class = "form-control datepicker_normal" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                วัน/เดือน/ปี เกิด
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("birthday", "", new { @class = "form-control datepicker_normal" })
+                                            </div>
+                                            <div class="col-md-2">
+                                                อายุ
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("age", "", new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                สัญชาติ
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("nationality", "", new { @class = "form-control" })
+                                            </div>
+                                            <div class="col-md-2">
+                                                เชื้อชาติ
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("race", "", new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                ศาสนา
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("religion", "", new { @class = "form-control" })
+                                            </div>
+                                           
+                                        </div>
+                                    </div>
+                                    @*<div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                น้ำหนัก
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("aaaa", "", new { @class = "form-control" })
+                                            </div>
+                                            <div class="col-md-2">
+                                                ส่วนสูง
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("aaaa", "", new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>*@
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                สถานภาพสมรส
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.DropDownList("marital", new List<SelectListItem> { new SelectListItem { Text = "โสด" }, new SelectListItem { Text = "สมรส" }, new SelectListItem { Text = "หย่า" }, new SelectListItem { Text = "โสด" } }, new { @class = "form-control" })
+                                            </div>
+                                           
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-12 text-center">
+                                              
+                                                <a class="btn btn-default">ยกเลิก</a>
+                                                <input id="submit1" type="button" class="btn btn-primary submitPerson" value="บันทึก" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group text-right">
+
+                                        <button type="button" class="btn btn-primary next-step responsive testDisable">ดำเนินการต่อ</button>
+
+                                    </div>
+                                @*@{Html.EndForm();}*@
+                                   
+                                    
+                                </div>
+                                <div class="tab-pane responsive" role="tabpanel" id="step2" style="margin: 0% 7% 0% 5%;">
+                                   
+                                    <div class="col-md-6 col-lg-6">
+                                        ที่อยู่ตามทะเบียนบ้าน
+                                        <hr />
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    เลขที่
+                                                </div>
+                                                <div class="col-md-4">
+                                                    @Html.TextBox("add_num", "", new { @class = "form-control" })
+                                                </div>
+                                                <div class="col-md-2">
+                                                    หมู่ที่
+                                                </div>
+                                                <div class="col-md-4">
+                                                    @Html.TextBox("add_moo", "", new { @class = "form-control" })
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    ประเภทที่พัก
+                                                </div>
+                                                <div class="col-md-10">
+                                                    @*@Html.TextBox("add_type", "", new { @class = "form-control" })*@
+                                                    @Html.DropDownList("add_type", new List<SelectListItem> {
+                                                   new SelectListItem { Value="0", Text="เลือกประเภทที่พัก"},
+                                                   new SelectListItem { Value="home", Text="บ้าน"},
+                                                   new SelectListItem { Value = "dorm", Text = "หอพัก" },
+                                                   new SelectListItem { Value = "apartment", Text = "อพาร์ทเม้นท์"},
+                                                   new SelectListItem { Value = "etc", Text = "อื่นๆ"}
+                                               }
+                                                 , new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    ชื่อ
+                                                </div>
+                                                <div class="col-md-10">
+                                                    @Html.TextBox("add_name", "", new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    ซอย
+                                                </div>
+                                                <div class="col-md-10">
+                                                    @Html.TextBox("add_alley", "", new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    ถนน
+                                                </div>
+                                                <div class="col-md-10">
+                                                    @Html.TextBox("add_road", "", new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    จังหวัด
+                                                </div>
+                                                <div class="col-md-10">
+                                                    @*@Html.TextBox("add_province", "", new { @class = "form-control" })*@
+                                                    @Html.DropDownList("add_province", ViewData["province"] as List<SelectListItem>, new { @class = "form-control select2", @style = "width:100%", @onchange="myFunctionProvince()" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                       
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    เขต/อำเภอ
+                                                </div>
+                                                <div class="col-md-10">
+                                                    @*@Html.TextBox("add_amphur", "", new { @class = "form-control" })*@
+                                                    @*@Html.DropDownList("add_amphur", ViewData["amphur"] as List<SelectListItem>, new { @class="form-control select2", @style = "width:100%" })*@
+                                                    <div class="amphur"> @Html.DropDownList("add_amphur", ViewData["amphur"] as List<SelectListItem>, new { @class = "form-control select2", @style = "width:100%", @onchange = "myFunctionAmphur()" })</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    แขวง/ตำบล
+                                                </div>
+                                                <div class="col-md-10">
+                                                    @*@Html.TextBox("add_district", "", new { @class = "form-control" })*@
+                                                    @*@Html.DropDownList("add_district", ViewData["district"] as List<SelectListItem>, new { @class = "form-control select2", @style = "width:100%" })*@
+                                                    <div class="district">
+                                                        @Html.DropDownList("add_district", new List<SelectListItem>
+                                                                                    {new SelectListItem { Selected = true, Text = "เลือกแขวง/ตำบล", Value = "1"}
+                                                                                    }, new { @class = "form-control select2", @style = "width:100%" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    รหัสไปรษณีย์
+                                                </div>
+                                                <div class="col-md-10">
+                                                    @Html.TextBox("add_code", "", new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                       
+                                        
+                                    </div>
+                                    <div class="col-md-6 col-lg-6">
+                                        <span>ที่อยู่ที่ติดต่อได้ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="Checkbox1" type="checkbox" /> ที่อยู่ที่ติดต่อได้ตรงกับที่อยู่ตามทำเบียนบ้าน </span> 
+                                        <hr />
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    เลขที่
+                                                </div>
+                                                <div class="col-md-4">
+                                                    @Html.TextBox("add_num1", "", new { @class = "form-control" })
+                                                </div>
+                                                <div class="col-md-2">
+                                                    หมู่ที่
+                                                </div>
+                                                <div class="col-md-4">
+                                                    @Html.TextBox("add_moo1", "", new { @class = "form-control" })
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    ประเภทที่พัก
+                                                </div>
+                                                <div class="col-md-10">
+                                                    @*@Html.TextBox("add_type1", "", new { @class = "form-control" })*@
+                                                    @Html.DropDownList("add_type1",new List<SelectListItem> {
+                                                    new SelectListItem { Value="0", Text="เลือกประเภทที่พัก"},
+                                                   new SelectListItem { Value="home", Text="บ้าน"},
+                                                   new SelectListItem { Value = "dorm", Text = "หอพัก" },
+                                                   new SelectListItem { Value = "apartment", Text = "อพาร์ทเม้นท์"},
+                                                   new SelectListItem { Value = "etc", Text = "อื่นๆ"}
+                                               }
+                                                 , new { @class="form-control"})
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    ชื่อ
+                                                </div>
+                                                <div class="col-md-10">
+                                                    @Html.TextBox("add_name1", "", new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    ซอย
+                                                </div>
+                                                <div class="col-md-10">
+                                                    @Html.TextBox("add_alley1", "", new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    ถนน
+                                                </div>
+                                                <div class="col-md-10">
+                                                    @Html.TextBox("add_road1", "", new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    จังหวัด
+                                                </div>
+                                                <div class="col-md-10">
+                                                    @*@Html.TextBox("add_province1", "", new { @class = "form-control" })*@
+                                                    @Html.DropDownList("add_province1", ViewData["province"] as List<SelectListItem>, new { @class = "form-control select2", @style = "width:100%" ,@onchange= "myFunctionProvince1()" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    เขต/อำเภอ
+                                                </div>
+                                                <div class="col-md-10">
+                                                    @*@Html.TextBox("add_amphur1", "", new { @class = "form-control" })*@
+                                                    @*@Html.DropDownList("add_amphur1",ViewData["amphur"] as List<SelectListItem>, new { @class="form-control select2", @style = "width:100%" })*@
+                                                    <div class="amphur1"> @Html.DropDownList("add_amphur1", ViewData["amphur"] as List<SelectListItem>, new { @class = "form-control select2", @style = "width:100%", @onchange = "myFunctionAmphur()" })</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    แขวง/ตำบล
+                                                </div>
+                                                <div class="col-md-10">
+                                                    @* @Html.TextBox("add_district1", "", new { @class = "form-control" })*@
+                                                    @*@Html.DropDownList("add_district1", ViewData["district"] as List<SelectListItem>, new { @class = "form-control select2", @style = "width:100%" })*@
+                                                    <div class="district1">
+                                                        @Html.DropDownList("add_district1", new List<SelectListItem>
+                                                                                    {new SelectListItem { Selected = true, Text = "เลือกแขวง/ตำบล", Value = "1"}
+                                                                                    }, new { @class = "form-control select2", @style = "width:100%" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    รหัสไปรษณีย์
+                                                </div>
+                                                <div class="col-md-10">
+                                                    @Html.TextBox("add_code1", "", new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                  
+                                    <hr />
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-12 text-center">
+                                                <input id="submit2" type="submit" class="btn btn-primary" value="บันทึก" />
+                                                <a class="btn btn-default">ยกเลิก</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-12 text-right">
+                                                <button type="button" class="btn btn-default prev-step">ก่อนหน้า</button>
+                                                <button type="button" class="btn btn-primary next-step responsive">ดำเนินการต่อ</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="tab-pane responsive" role="tabpanel" id="step3" style="margin: 0% 7% 0% 5%;">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                Email :
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("email", "", new { @class = "form-control" })
+                                            </div>
+                                          
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                โทรศัพท์ :
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("tel", "", new { @class = "form-control" })
+                                            </div>
+                                            <div class="col-md-2">
+                                                เบอร์โต๊ะ :
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("tel_table", "", new { @class = "form-control" })
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                มือถือ 1 :
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("mobile1", "", new { @class = "form-control" })
+                                            </div>
+                                            <div class="col-md-2">
+                                                มือถือ 2 :
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("mobile2", "", new { @class = "form-control" })
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                  
+                                  
+                                    <hr />
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-12 text-center">
+                                                <input id="submit3" type="submit" class="btn btn-primary" value="บันทึก" />
+                                                <a class="btn btn-default">ยกเลิก</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-12 text-right">
+                                                <button type="button" class="btn btn-default prev-step">ก่อนหน้า</button>
+                                                <button type="button" class="btn btn-primary next-step responsive">ดำเนินการต่อ</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                      
+                                <div class="tab-pane responsive" role="tabpanel" id="step4" style="margin: 0% 7% 0% 5%;">
+                                    ข้อมูล บิดา
+                                    <hr />
+                                    @*@{ Html.BeginForm("Family", "Personal", FormMethod.Post);}*@
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                ชื่อ
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("dad_name", "", new { @class = "form-control" })
+                                            </div>
+                                            <div class="col-md-2">
+                                                นามสกุล
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("dad_lastname", "", new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                อายุ
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("dad_age", "", new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                ที่อยู่ เลขที่
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("dad_num", "", new { @class = "form-control" })
+                                            </div>
+                                            <div class="col-md-2">
+                                                หมู่
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("dad_moo", "", new { @class = "form-control" })
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                จังหวัด
+                                            </div>
+                                            <div class="col-md-4">
+                                                @*@Html.TextBox("aa", "", new { @class = "form-control" })*@
+                                                <div class="dad_province">
+                                                    @Html.DropDownList("dadProvince", ViewData["province"] as List<SelectListItem>, new { @class = "form-control", @onchange = "myFunctionProvinceDad()" })
+                                                </div>
+
+                                            </div>
+                                            <div class="col-md-2">
+                                                อำเภอ/เขต
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="dad_amphur">
+                                                    @Html.DropDownList("dad_amphur",new List<SelectListItem> { new SelectListItem { Text="เลือกอำเภอ/เขต"} }, new { @class="form-control"})
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                ตำบล/แขวง
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="dad_district">
+                                                    @Html.DropDownList("dad_district", new List<SelectListItem> { new SelectListItem { Text = "เลือกตำบล/แขวง" } }, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                รหัสไปรษณีย์
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("dad_postcode", "", new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                โทรศัพท์
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("dad_tel", "", new { @class = "form-control" })
+                                            </div>
+                                            <div class="col-md-2">
+                                                มือถือ
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("dad_mobile", "", new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <hr />
+                                    ข้อมูล มารดา
+                                    <hr />
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                ชื่อ
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("mom_name", "", new { @class = "form-control" })
+                                            </div>
+                                            <div class="col-md-2">
+                                                นามสกุล
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("mom_lastname", "", new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                อายุ
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("mom_age", "", new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                ที่อยู่ เลขที่
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("mom_num", "", new { @class = "form-control" })
+                                            </div>
+                                            <div class="col-md-2">
+                                                หมู่
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("mom_moo", "", new { @class = "form-control" })
+                                            </div>
+                                           
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                จังหวัด
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="mom_province">
+                                                    @Html.DropDownList("mom_province", ViewData["province"] as List<SelectListItem>, new { @class = "form-control", @onchange = "myFunctionProvinceMom()" })
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                อำเภอ/เขต
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="mom_amphur">
+                                                    @Html.DropDownList("mom_amphur", new List<SelectListItem> { new SelectListItem { Text = "เลือกอำเภอ/เขต"} }, new { @class="form-control"})
+                                                </div>
+                                            </div>
+                                           
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                ตำบล/แขวง
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="mom_district">
+                                                    @Html.DropDownList("mom_district", new List<SelectListItem> { new SelectListItem { Text = "เลือกตำบล/แขวง" } }, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                รหัสไปรษณีย์
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("mom_postcode", "", new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                โทรศัพท์
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("mom_tel", "", new { @class = "form-control" })
+                                            </div>
+                                            <div class="col-md-2">
+                                                มือถือ
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("mom_mobile", "", new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <hr />
+                                    ข้อมูล คู่สมรส
+                                    <hr />
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                ชื่อ
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("mar_name", "", new { @class = "form-control" })
+                                            </div>
+                                            <div class="col-md-2">
+                                                นามสกุล
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("mar_lastname", "", new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                อายุ
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("mar_age", "", new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                ที่อยู่ เลขที่
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("mar_num", "", new { @class = "form-control" })
+                                            </div>
+                                            <div class="col-md-2">
+                                                หมู่
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("mar_moo", "", new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                จังหวัด
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="mar_province">
+                                                    @Html.DropDownList("mar_province", ViewData["province"] as List<SelectListItem>, new { @class = "form-control", @onchange = "myFunctionProvinceMar()" })
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                อำเภอ/เขต
+                                            </div>
+                                            <div class="col-md-4">
+                                               <div class="mar_amphur">
+                                                   @Html.DropDownList("mar_amphur",new List<SelectListItem> { new SelectListItem { Text="เลือกอำเภอ/เขต"} }, new { @class="form-control"})
+                                               </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                ตำบล/แขวง
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="mar_district">
+                                                    @Html.DropDownList("mar_district", new List<SelectListItem> { new SelectListItem { Text = "เลือกตำบล/อำเภอ" } }, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                รหัสไปรษณีย์
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("mar_postcode", "", new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                โทรศัพท์
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("mar_tel", "", new { @class = "form-control" })
+                                            </div>
+                                            <div class="col-md-2">
+                                                มือถือ
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("mar_mobile", "", new { @class = "form-control" })
+                                                @*@Html.TextBox("person","",new { @class="form-control"})*@
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <hr />
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-12 text-center">
+                                                <input  id="submit4" type="submit" class="btn btn-primary" value="บันทึก" />
+                                                <a class="btn btn-default">ยกเลิก</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @*@{ Html.EndForm();}*@
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-12 text-right">
+                                                <button type="button" class="btn btn-default prev-step">ก่อนหน้า</button>
+                                                <button type="button" class="btn btn-primary next-step responsive">ดำเนินการต่อ</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="tab-pane responsive" role="tabpanel" id="step5" style="margin: 0% 7% 0% 5%;">
+                                  <div class="form-group">
+                                      <div class="row">
+                                          <div class="col-md-2">
+                                              จำนวนบุตร
+                                          </div>
+                                          <div class="col-md-4">
+                                              @Html.TextBox("aa","",new { @class="form-control numKid"})
+                                          </div>
+                                      </div>
+                                  </div>
+                                 
+                                    <hr />
+                                    <div class="form-group detailKid">
+                                  <!-- content-->
+                                  <!--/content-->
+                                    </div>
+                                    <hr />
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-12 text-center">
+                                                <input id="submit5" type="submit" class="btn btn-primary" value="บันทึก" />
+                                                <a class="btn btn-default">ยกเลิก</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-12 text-right">
+                                                <button type="button" class="btn btn-default prev-step">ก่อนหน้า</button>
+                                                <button type="button" class="btn btn-primary next-step responsive">ดำเนินการต่อ</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane responsive" role="tabpanel" id="step6" style="margin: 0% 7% 0% 5%;">
+                                   <div class="form-group">
+                                       <div class="row">
+                                           <div class="col-md-12">
+                                              <a class="btn btn-primary addStudy"><i class="fa fa-plus-circle"></i> เพิ่มประวัติการศึกษา</a>
+                                           </div>
+                                       </div>
+                                   </div>
+                                    <div class="detailStudy">
+                                        <!----content-->
+                                    </div>
+                                   <hr />
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-12 text-center">
+                                                <input id="submit6" type="submit" class="btn btn-primary" value="บันทึก" />
+                                                <a class="btn btn-default">ยกเลิก</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-12 text-right">
+                                                <button type="button" class="btn btn-default prev-step">ก่อนหน้า</button>
+                                                <button type="button" class="btn btn-primary next-step responsive">ดำเนินการต่อ</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane responsive" role="tabpanel" id="step7" style="margin: 0% 7% 0% 5%;">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <a class="btn btn-primary addWork"><i class="fa fa-plus-circle"></i> เพิ่มประวัติการทำงาน</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="detailWork">
+
+                                    </div>
+                                    <hr />
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-12 text-center">
+                                                <input id="submit7" type="submit" class="btn btn-primary" value="บันทึก" />
+                                                <a class="btn btn-default">ยกเลิก</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-12 text-right">
+                                                <button type="button" class="btn btn-default prev-step">ก่อนหน้า</button>
+                                                <button type="button" class="btn btn-primary next-step responsive">ดำเนินการต่อ</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane responsive" role="tabpanel" id="step8" style="margin: 0% 7% 0% 5%;">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <a class="btn btn-primary addTrain"><i class="fa fa-plus-circle"></i> เพิ่มประวัติการฝึกอบรม</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="detailTrain">
+
+                                    </div>
+                                    <hr/>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-12 text-center">
+                                                <input id="submit8" type="submit" class="btn btn-primary" value="บันทึก" />
+                                                <a class="btn btn-default">ยกเลิก</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-12 text-right">
+                                                <button type="button" class="btn btn-default prev-step">ก่อนหน้า</button>
+                                                <button type="button" class="btn btn-primary next-step responsive testRemove">ดำเนินการต่อ</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="tab-pane responsive" role="tabpanel" id="complete" style="margin: 0% 7% 0% 5%;">
+                                    <h3>บันทึกข้อมูลเรียบร้อยแล้ว</h3>
+                                    <p>You have successfully completed all steps.</p>
+                                    <hr />
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-12 text-right">
+                                                <button type="button" class="btn btn-primary Continue">เพิ่มรายการต่อ</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <hr>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+    <!----/wizard------>
+</div>
+<script src="~/lib/jquery/dist/jquery-3.2.1.min.js" type="text/javascript"></script>
+<script>
+    var personal_id;
+</script>
+<script type="text/javascript">
+    function stepWizard() {
+
+        //Initialize tooltips
+        $('.nav-tabs > li a[title]').tooltip();
+
+        //Wizard
+        $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
+
+            var $target = $(e.target);
+
+            if ($target.parent().hasClass('disabled')) {
+                return false;
+            }
+        });
+
+        $(".next-step").click(function (e) {
+
+            var $active = $('.wizard .nav-tabs li.active');
+            $active.next().removeClass('disabled');
+            nextTab($active);
+
+        });
+        $(".prev-step").click(function (e) {
+
+            var $active = $('.wizard .nav-tabs li.active');
+            prevTab($active);
+
+        });
+
+
+        function nextTab(elem) {
+            $(elem).next().find('a[data-toggle="tab"]').click();
+        }
+        function prevTab(elem) {
+            $(elem).prev().find('a[data-toggle="tab"]').click();
+        }
+    }
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        stepWizard();
+    })
+</script>
+<script type="text/javascript">
+    $(document).on('keyup', '.numKid', function () {
+
+        var num = $('.numKid').val();
+        var detail="";
+        if (num >= 1) {
+        for (var i = 0; i < num; i++) {
+
+            detail += '<hr/><div class="box box-danger kid'+i+'">' +
+                                             '<div class="box-header with-border">' +
+                                                 '<h3 class="box-title">ข้อมูลบุตร '+parseInt(i+1)+'</h3>' +
+                                             '</div>' +
+                                             '<div class="box-body">' +
+                                                 '<div class="form-group">' +
+                                                     '<div class="row">' +
+                                                         '<div class="col-md-2">' +
+                                                             'ชื่อ' +
+                                                         '</div>' +
+                                                         '<div class="col-md-4">' +
+                                                            '@Html.TextBox("aa", "", new { @class = "form-control kid_name" })' +
+                                                 '</div>' +
+                                                 '<div class="col-md-2">' +
+                                                     'นามสกุล' +
+                                                 '</div>' +
+                                                 '<div class="col-md-4">' +
+                                                     '@Html.TextBox("aa", "", new { @class = "form-control kid_lastname" })' +
+                                                 '</div>' +
+                                             '</div>' +
+                                         '</div>' +
+                                         '<div class="form-group">' +
+                                             '<div class="row">' +
+                                                 '<div class="col-md-2">' +
+                                                     'อายุ' +
+                                                 '</div>' +
+                                                 '<div class="col-md-4">' +
+                                                     '@Html.TextBox("aa", "", new { @class = "form-control kid_age" })' +
+                                                 '</div>' +
+                                                 '<div class="col-md-2">' +
+                                                     'กำลังศึกษา' +
+                                                 '</div>' +
+                                                 '<div class="col-md-4">' +
+                                                    '<input type="radio" name="a'+i+'" class="kid_study_true" value="yes"/> ใช่' +
+                                                    '<input type="radio" name="a' + i + '" class="kid_study_true" value="not" /> ไม่ใช่' +
+                                                 '</div>' +
+                                             '</div>' +
+                                         '</div>' +
+                                         '<div class="form-group">' +
+                                             '<div class="row">' +
+                                                 '<div class="col-md-2">' +
+                                                    'ระดับการศึกษา' +
+                                                 '</div>' +
+                                                 '<div class="col-md-4">' +
+                                                     '@Html.TextBox("aa", "", new { @class = "form-control kid_study_lavel" })' +
+                                                 '</div>' +
+                                                 '<div class="col-md-2">' +
+                                                     'สถานศึกษา' +
+                                                 '</div>' +
+                                                 '<div class="col-md-4">' +
+                                                     '@Html.TextBox("aa", "", new { @class = "form-control kid_study_school" })' +
+                                                 '</div>' +
+                                             '</div>' +
+                                         '</div>' +
+                                     '</div>' +
+                                 '</div>';
+        }
+         }else{
+
+                detail = "";
+
+      }
+
+
+        
+       $('.detailKid').html(detail);
+      
+
+    })
+</script>
+<script>
+    $(document).on('click', '#submit5', function () {
+
+       
+        var i = 0;
+        var len = $('.numKid').val();
+        var txt_name = "";
+        var txt_lastname = "";
+        var txt_age = "";
+        var txt_check = "";
+        var txt_level = "";
+        var txt_school = "";
+
+        for (i = 0; i < len; i++){
+
+            txt_name += $('.kid_name').eq(i).val()+"^";
+            txt_lastname +=$('.kid_lastname').eq(i).val() + "^";
+            txt_age += $('.kid_age').eq(i).val() + "^";
+            txt_check += $('.kid_study_true:checked').eq(i).val() + "^";
+            txt_level += $('.kid_study_lavel').eq(i).val() + "^";
+            txt_school += $('.kid_study_school').eq(i).val() + "^";
+
+        }
+
+        $.get('../Personal/Kid?name=' + txt_name + "&lastname=" + txt_lastname + "&age=" + txt_age + "&status=" + txt_check + "&level=" + txt_level + "&school=" + txt_school+"&person="+personal_id+'&num='+len, function (data) {
+
+            swal("บันทึกข้อมูลบุตร!", "เรียบร้อยแล้ว!", "success");
+
+            var $active = $('.wizard .nav-tabs li.active');
+            $active.next().removeClass('disabled');
+            nextTab($active);
+
+            function nextTab(elem) {
+                $(elem).next().find('a[data-toggle="tab"]').click();
+            }
+
+        })
+
+
+        //alert();
+     
+    })
+</script>
+<script type="text/javascript">
+    $(document).on('click', '.addStudy', function () {
+
+        var txt = '<div><div class="form-group groupStudy">' +
+                                        '<div class="row">' +
+                                            '<div class="col-md-2">' +
+                                                'ปีการศึกษา' +
+                                            '</div>' +
+                                            '<div class="col-md-3">' +
+                                               ' @Html.TextBox("aa", "", new { @class = "form-control study_year" })' +
+                                            '</div>' +
+                                            '<div class="col-md-2">' +
+                                               '<a class="btn btn-danger moveStudy"><i class="fa fa-trash"></i> ลบ</a>' +
+                                            '</div>' +
+                                        '</div>' +
+                                    '</div>' +
+                                  '<div class="form-group">' +
+                                        '<div class="row">' +
+
+                                            '<div class="col-md-2">' +
+                                                'วุฒิการศึกษา' +
+                                            '</div>' +
+                                            '<div class="col-md-4">' +
+                                                '@Html.TextBox("aa", "", new { @class = "form-control study_degree" })' +
+                                            '</div>' +
+                                            '<div class="col-md-2">' +
+                                                'สาขา/คณะ' +
+                                            '</div>' +
+                                            '<div class="col-md-3">' +
+                                                '@Html.TextBox("aa", "", new { @class = "form-control study_branch" })' +
+                                            '</div>' +
+                                        '</div>' +
+                                    '</div>' +
+                                    '<div class="form-group">' +
+                                        '<div class="row">' +
+
+                                            '<div class="col-md-2">' +
+                                                'สถานศึกษา' +
+                                            '</div>' +
+                                            '<div class="col-md-4">' +
+                                                '@Html.TextBox("aa", "", new { @class = "form-control study_academy" })' +
+                                            '</div>' +
+                                            '<div class="col-md-2">' +
+                                                'เกรดเฉลี่ย' +
+                                            '</div>' +
+                                            '<div class="col-md-3">' +
+                                                '@Html.TextBox("aa", "", new { @class = "form-control study_gpa" })' +
+                                            '</div>' +
+                                        '</div>' +
+                                    '</div></div>';
+
+        $(".detailStudy").prepend(txt);
+    });
+    $(document).on('click', '.moveStudy', function () {
+
+        $(this).parent().parent().parent().parent().remove('div');
+
+    })
+</script>
+<script>
+    $(document).on('click', '#submit6', function () {
+
+        var txt_year = "";
+        var txt_academy = "";
+        var txt_gpa = "";
+        var txt_degree = "";
+        var txt_branch = "";
+        var len = $('.groupStudy').length;
+        var i = 0;
+
+        for (i = 0; i < len; i++) {
+
+            txt_year += $('.study_year').eq(i).val() + "^";
+            txt_academy += $('.study_academy').eq(i).val() + "^";
+            txt_gpa += $('.study_gpa').eq(i).val() + "^";
+            txt_degree += $('.study_degree').eq(i).val() + "^";
+            txt_branch += $('.study_branch').eq(i).val() + "^";
+            
+
+        }
+        
+        $.get('../Personal/Study?year=' + txt_year + '&academy=' + txt_academy + '&gpa=' + txt_gpa + '&degree=' + txt_degree + '&branch=' + txt_branch+'&num='+len+'&person='+personal_id, function () {
+
+
+            swal("บันทึกข้อมูลการศึกษา!", "เรียบร้อยแล้ว!", "success");
+
+            var $active = $('.wizard .nav-tabs li.active');
+            $active.next().removeClass('disabled');
+            nextTab($active);
+
+            function nextTab(elem) {
+                $(elem).next().find('a[data-toggle="tab"]').click();
+            }
+
+
+        })
+
+
+    })
+</script>
+<script type="text/javascript">
+    $(document).on('click', '.addWork', function () {
+
+        var txt = '<div><div class="form-group group_work">' +
+                                        '<div class="row">' +
+                                            '<div class="col-md-2">' +
+                                                'ชื่อบริษัท' +
+                                            '</div>' +
+                                            '<div class="col-md-3">' +
+                                               ' @Html.TextBox("aa", "", new { @class = "form-control work_company" })' +
+                                            '</div>' +
+                                            '<div class="col-md-7">' +
+                                               '<a class="btn btn-danger moveWork"><i class="fa fa-trash"></i> ลบ</a>' +
+                                            '</div>' +
+                                        '</div>' +
+                                    '</div>' +
+                                    '<div class="form-group">' +
+                                        '<div class="row">' +
+                                          '<div class="col-md-2">' +
+                                                'ตำแหน่ง' +
+                                            '</div>' +
+                                            '<div class="col-md-3">' +
+                                                '@Html.TextBox("aa", "", new { @class = "form-control work_position" })' +
+                                            '</div>' +
+                                            '<div class="col-md-2">' +
+                                                'ที่อยู่' +
+                                            '</div>' +
+                                            '<div class="col-md-4">' +
+                                                '@Html.TextBox("aa", "", new { @class = "form-control work_adddress" })' +
+                                            '</div>' +
+
+                                        '</div>' +
+                                        '</div>' +
+                                         '<div class="form-group">' +
+                                        '<div class="row">' +
+                                            '<div class="col-md-2">' +
+                                                'วันที่เริ่มงาน' +
+                                            '</div>' +
+                                            '<div class="col-md-4">' +
+                                                '@Html.TextBox("aa", "", new { @class = "form-control work_start datepicker" })' +
+                                            '</div>' +
+                                            '<div class="col-md-2">' +
+                                                'วันที่ลาออก' +
+                                            '</div>' +
+                                            '<div class="col-md-3">' +
+                                                '@Html.TextBox("aa", "", new { @class = "form-control work_end datepicker" })' +
+                                            '</div>' +
+                                        '</div>' +
+                                    '</div></div>';
+
+ $(".detailWork").prepend(txt);
+    });
+    $(document).on('click', '.moveWork', function () {
+
+
+        $(this).parent().parent().parent().parent().remove('div');
+
+    })
+</script>
+<script>
+    $(document).on('click', '#submit7', function () {
+
+        var txt_company = "";
+        var txt_address = "";
+        var txt_start = "";
+        var txt_end = "";
+        var txt_position = "";
+        var txt_length = $('.group_work').length;
+        var i = 0;
+
+        for (i = 0; i < txt_length; i++) {
+
+            txt_company += $('.work_company').val()+'^';
+            txt_address += $('.work_adddress').val() + '^';
+            txt_position += $('.work_position').val()+'^';
+            txt_start += $('.work_start').val()+'^';
+            txt_end += $('.work_end').val()+'^';
+
+        }
+       
+        $.get('../Personal/Work?company=' + txt_company + '&address=' + txt_address + '&position=' + txt_position + '&start=' + txt_start + '&end=' + txt_end + '&num=' + txt_length + '&person=' + personal_id, function () {
+
+            swal("บันทึกประวัติการทำงาน!", "เรียบร้อยแล้ว!", "success");
+
+            var $active = $('.wizard .nav-tabs li.active');
+            $active.next().removeClass('disabled');
+            nextTab($active);
+
+            function nextTab(elem) {
+                $(elem).next().find('a[data-toggle="tab"]').click();
+            }
+
+        })
+
+    })
+    
+</script>
+<script type="text/javascript">
+    $(document).on('click', '.addTrain', function () {
+
+        var txt = '<div><hr/><div class="form-group groupTrian">' +
+                                        '<div class="row">' +
+                                            '<div class="col-md-2">' +
+                                                'เรื่องที่อบรม' +
+                                            '</div>' +
+                                            '<div class="col-md-3">' +
+                                               ' @Html.TextBox("aa", "", new { @class = "form-control train_title" })' +
+                                            '</div>' +
+                                            '<div class="col-md-7">' +
+                                               '<a class="btn btn-danger moveTrain"><i class="fa fa-trash"></i> ลบ</a>' +
+                                            '</div>' +
+                                        '</div>' +
+                                    '</div>' +
+                                    '<div class="form-group">' +
+                                        '<div class="row">' +
+
+                                            '<div class="col-md-2">' +
+                                                'สถานที่' +
+                                            '</div>' +
+                                            '<div class="col-md-10">' +
+                                                '@Html.TextBox("aa", "", new { @class = "form-control train_location" })' +
+                                            '</div>' +
+                                        '</div>' +
+                                     '</div>' +
+                                         '<div class="form-group">' +
+                                        '<div class="row">' +
+
+                                            '<div class="col-md-2">' +
+                                                'วันที่ เริ่มอบรม' +
+                                            '</div>' +
+                                            '<div class="col-md-4">' +
+                                                '@Html.TextBox("aa", "", new { @class = "form-control train_start" })' +
+                                            '</div>' +
+                                            '<div class="col-md-2">' +
+                                                'วันที่ สิ้นสุดการอบรม' +
+                                            '</div>' +
+                                            '<div class="col-md-3">' +
+                                                '@Html.TextBox("aa", "", new { @class = "form-control train_end" })' +
+                                            '</div>' +
+                                        '</div>' +
+                                    '</div></div>';
+
+        $(".detailTrain").prepend(txt);
+    });
+    $(document).on('click', '.moveTrain', function () {
+
+
+        $(this).parent().parent().parent().parent().remove('div');
+
+    })
+</script>
+<script>
+    $(document).on('click', '#submit8', function () {
+
+        var txt_title = "";
+        var txt_location = "";
+        var txt_start = "";
+        var txt_end = "";
+        var txt_length = $('.groupTrain').length;
+        var i = 0;
+
+        for (i = 0; i < txt_length; i++) {
+
+            txt_title += $('.train_title').val()+'^';
+            txt_location += $('.train_location').val()+'^';
+            txt_start += $('.train_start').val()+'^';
+            txt_end += $('.train_end').val()+'^';
+
+        }
+
+        $('../Personal/Train?title=' + txt_title + '&location=' + txt_location + '&start=' + txt_start + '&end=' + txt_end + '&num=' + txt_length + '&person=' + personal_id, function () {
+
+
+            swal("บันทึกประวัติการฝึกอบรม!", "เรียบร้อยแล้ว!", "success");
+
+            var $active = $('.wizard .nav-tabs li.active');
+            $active.next().removeClass('disabled');
+            nextTab($active);
+
+            function nextTab(elem) {
+                $(elem).next().find('a[data-toggle="tab"]').click();
+            }
+
+        })
+
+        $('.menuBar').removeAttr('style');
+
+    })
+
+    $(document).on('click', '.testRemove', function () {
+
+        $('.menuBar').removeAttr('style');
+
+    })
+
+</script>
+<script type="text/javascript">
+    $(document).on('click', '#Checkbox1', function () {
+
+
+       var check = $('#Checkbox1').prop('checked');
+
+       if (check == true) {
+
+           $('#add_num1').val($('#add_num').val());
+           $('#add_moo1').val($('#add_moo').val());
+           $('#add_type1').val($('#add_type').val());
+           $('#add_name1').val($('#add_name').val());
+           $('#add_alley1').val($('#add_alley').val());
+           $('#add_road1').val($('#add_road').val());
+           $('#add_district1').val($('#add_district').val());
+           $('#add_amphur1').val($('#add_amphur').val());
+           $('#add_province1').val($('#add_province').val());
+           $('#add_code1').val($('#add_code').val());
+
+
+           $(document).on('keyup', '#add_num', function(){
+
+               $('#add_num1').val($('#add_num').val());
+
+           })
+
+
+           $(document).on('keyup', '#add_moo', function () {
+
+               $('#add_moo1').val($('#add_moo').val());
+
+           })
+
+
+           $(document).on('keyup', '#add_type', function () {
+
+               $('#add_type1').val($('#add_type').val());
+
+           })
+
+
+           $(document).on('keyup', '#add_name', function () {
+
+               $('#add_name1').val($('#add_name').val());
+
+           })
+
+
+           $(document).on('keyup', '#add_alley', function () {
+
+               $('#add_alley1').val($('#add_alley').val());
+
+           })
+
+
+           $(document).on('keyup', '#add_road', function () {
+
+               $('#add_road1').val($('#add_road').val());
+
+           })
+
+
+           $(document).on('keyup', '#add_district', function () {
+
+               $('#add_district1').val($('#add_district').val());
+
+           })
+
+
+           $(document).on('keyup', '#add_amphur', function () {
+
+               $('#add_amphur1').val($('#add_amphur').val());
+
+           })
+
+
+           $(document).on('keyup', '#add_province', function () {
+
+               $('#add_province1').val($('#add_province').val());
+
+           })
+
+
+           $(document).on('keyup', '#add_code', function () {
+
+               $('#add_code1').val($('#add_code').val());
+
+           })
+
+
+
+
+       } else {
+
+           $('#add_num1').val('');
+           $('#add_moo1').val('');
+           $('#add_type1').val('');
+           $('#add_name1').val('');
+           $('#add_alley1').val('');
+           $('#add_road1').val('');
+           $('#add_district1').val('');
+           $('#add_amphur1').val('');
+           $('#add_province1').val('');
+           $('#add_code1').val('');
+
+
+       }
+
+       // alert(check);
+    })
+</script>
+<script type="text/javascript">
+    $(document).on('change', '#prefix_th', function () {
+
+        //  alert($('#prefix_th').val());
+        var th = $('#prefix_th').val();
+
+        $('#prefix_en').val(th);
+
+    })
+    $(document).on('change', '#prefix_en', function () {
+
+        //  alert($('#prefix_th').val());
+        var en = $('#prefix_en').val();
+
+        $('#prefix_th').val(en);
+
+    })
+</script>
+<script type="text/javascript">
+    $(document).on('click', '.testDisable', function () {
+
+        $('.menuBar').attr('style', 'pointer-events: none; cursor: default;');
+
+    })
+    $(document).on('click', '#submit1', function () {
+
+        var prefix_th = $('#prefix_th').val();
+        var prefix_en = $('#prefix_en').val();
+        var name_th = $('#name_th').val();
+        var name_en = $('#name_en').val();
+        var lastname_th = $('#lastname_th').val();
+        var lastname_en = $('#lastname_en').val();
+        var gender = $('#gender').val();
+        var blood = $('#blood').val();
+        var national_id = $('#national_id').val();
+        var national_start = $('#national_start').val();
+        var national_end = $('#national_end').val();
+        var birthday = $('#birthday').val();
+        var nationality = $('#nationality').val();
+        var race = $('#race').val();
+        var religion = $('#religion').val();
+        var marital = $('#marital').val();
+
+        if ($('#name_th').val() != "" && $('#name_en').val() != "" && $('#lastname_th').val() != "" && $('#lastname_en').val() != "" && $('#national_id').val() != "" && $('#national_start').val() != "" && $('#national_end').val() != "" && $('#birthday').val() != "" && $('#nationality').val() != "" && $('#race').val() != "") {
+
+            $.get('../Personal/insertPersonal?prefix_th=' + prefix_th + "&name_th=" + name_th + "&lastname_th=" + lastname_th + "&prefix_en=" + prefix_en + "&name_en=" + name_en + "&lastname_en=" + lastname_en + "&gender=" + gender + "&blood=" + blood + "&national_id=" + national_id + "&national_start=" + national_start + "&national_end=" + national_end + "&birthday=" + birthday + "&nationality=" + nationality + "&race=" + race + "&marital=" + marital+"&gion="+religion, function (data) {
+
+
+                swal("บันทึกข้อมูล!", "เรียบร้อยแล้ว! id: " + data, "success");
+
+
+                personal_id = data;
+
+                var $active = $('.wizard .nav-tabs li.active');
+                $active.next().removeClass('disabled');
+                nextTab($active);
+
+                function nextTab(elem) {
+                    $(elem).next().find('a[data-toggle="tab"]').click();
+                }
+
+            })
+
+        } else {
+
+            swal("กรอกข้อมูลไม่ครบถ้วน","กรุณากรอกข้อมูลให้ครบถ้วน","error");
+
+           
+            if ($('#name_th').val() == "") {
+
+                $('#name_th').parent().attr('class','col-md-4 has-error');
+
+            }
+
+            if ($('#name_en').val() == "") {
+
+                $('#name_en').parent().attr('class', 'col-md-4 has-error');
+
+            }
+
+            if ($('#lastname_th').val() == "") {
+
+                $('#lastname_th').parent().attr('class', 'col-md-4 has-error');
+
+            }
+
+            if ($('#lastname_en').val() == "") {
+
+                $('#lastname_en').parent().attr('class', 'col-md-4 has-error');
+
+            }
+
+            if ($('#national_id').val() == "") {
+
+                $('#national_id').parent().attr('class', 'col-md-4 has-error');
+
+            }
+
+            if ($('#national_start').val() == "") {
+
+                $('#national_start').parent().attr('class', 'col-md-4 has-error');
+
+            }
+
+            if ($('#national_end').val() == "") {
+
+                $('#national_end').parent().attr('class', 'col-md-4 has-error');
+
+            }
+
+            if ($('#birthday').val() == "") {
+
+                $('#birthday').parent().attr('class', 'col-md-4 has-error');
+
+            }
+
+            if ($('#nationality').val() == "") {
+
+                $('#nationality').parent().attr('class', 'col-md-4 has-error');
+
+            }
+
+            if ($('#race').val() == "") {
+
+                $('#race').parent().attr('class', 'col-md-4 has-error');
+
+            }
+
+            if ($('#religion').val() == "") {
+
+                $('#religion').parent().attr('class', 'col-md-4 has-error');
+
+            }
+
+            if ($('#blood').val() == "") {
+
+                $('#blood').parent().attr('class', 'col-md-4 has-error');
+
+            }
+            
+        }
+
+        $('.menuBar').attr('style', 'pointer-events: none; cursor: default;');
+
+
+    })
+</script>
+<script type="text/javascript">
+
+    $(document).on('keyup', '#name_th', function () {
+
+        var name = $('#name_th').val();
+        var lastname = $('#lastname_th').val();
+        var item;
+        $.get('../Personal/checkName?name=' + name+"&lastname="+lastname, function (data) {
+
+            if (data == "0") {
+                item = "<i class='fa fa-check'><i>";
+                $('.checkname').css({ 'color': 'green', 'font-size': '150%' });
+                $('.checkname').html(item+"ยังไม่มีชื่อนี้ในระบบ");
+            } else {
+                item = "<i class='fa  fa-times'><i>";
+                $('.checkname').css({ 'color': 'red', 'font-size': '150%' });
+                $('.checkname').html(item+"มีชื่อนี้ในระบบแล้ว");
+            }
+
+        })
+
+    })
+    $(document).on('keyup', '#lastname_th', function () {
+
+
+        var name = $('#name_th').val();
+        var lastname = $('#lastname_th').val();
+        var item;
+        $.get('../Personal/checkName?name=' + name + "&lastname=" + lastname, function (data) {
+
+            if (data == "0") {
+                item = "<i class='fa fa-check'><i>";
+                $('.checkname').css({ 'color': 'green', 'font-size': '150%' });
+                $('.checkname').html(item + "ยังไม่มีชื่อนี้ในระบบ");
+            } else {
+                item = "<i class='fa  fa-times'><i>";
+                $('.checkname').css({ 'color': 'red', 'font-size': '150%' });
+                $('.checkname').html(item + "มีชื่อนี้ในระบบแล้ว");
+            }
+
+        })
+
+    })
+</script>
+<script>
+    function myFunctionProvince() {
+
+        var x = document.getElementById("add_province").value;
+
+        $.get('../../Personal/getAmphur?id=' + x, function (data) {
+
+            $('.amphur').html('');
+            $('.amphur').html("<select id='add_amphur' class='form-control' onchange='myFunctionAmphur()'>" + data + "</select>");
+            $('#add_amphur').select2();
+
+        });
+
+        //alert(x);
+
+    }
+    function myFunctionProvince1() {
+
+        var x = document.getElementById("add_province1").value;
+
+        $.get('../../Personal/getAmphur?id=' + x, function (data) {
+
+            $('.amphur1').html('');
+            $('.amphur1').html("<select id='add_amphur1' class='form-control' onchange='myFunctionAmphur1()'>" + data + "</select>");
+            $('#add_amphur1').select2();
+
+        });
+       // alert(x);
+
+    }
+    function myFunctionAmphur() {
+
+        var x = document.getElementById("add_amphur").value;
+
+        $.get('../../Personal/getDistrict?id=' + x, function (data) {
+
+            $('.district').html('');
+            $('.district').html('<select id="add_district" class="form-control select2">' + data + '</select>');
+            $('#add_district').select2();
+
+        })
+
+    //    alert(x);
+
+    }
+    function myFunctionAmphur1() {
+
+        var x = document.getElementById("add_amphur1").value;
+
+        $.get('../../Personal/getDistrict?id=' + x, function (data) {
+
+            $('.district1').html('');
+            $('.district1').html('<select id="add_district1" class="form-control select2">' + data + '</select>');
+            $('#add_district1').select2();
+
+        })
+        //alert(x);
+
+    }
+</script>
+<script>
+    function myFunctionProvinceDad() {
+
+        var x = document.getElementById("dadProvince").value;
+
+        $.get('../../Personal/getAmphur?id=' + x, function (data) {
+
+            $('.dad_amphur').html('');
+            $('.dad_amphur').html("<select id='dad_amphur' class='form-control' onchange='myFunctionAmphurDad()'>" + data + "</select>");
+            $('#dad_amphur').select2();
+
+        });
+
+       // alert(x);
+    }
+    function myFunctionAmphurDad() {
+
+        var x = document.getElementById("dad_amphur").value;
+        
+        $.get('../../Personal/getDistrict?id=' + x, function (data) {
+
+            $('.dad_district').html('');
+            $('.dad_district').html('<select id="dad_district" class="form-control select2">' + data + '</select>');
+            $('#dad_district').select2();
+
+        })
+
+    }
+</script>
+<script>
+    function myFunctionProvinceMom() {
+
+        var x = document.getElementById("mom_province").value;
+
+        $.get('../../Personal/getAmphur?id=' + x, function (data) {
+
+            $('.mom_amphur').html('');
+            $('.mom_amphur').html("<select id='mom_amphur' class='form-control' onchange='myFunctionAmphurMom()'>" + data + "</select>");
+            $('#mom_amphur').select2();
+
+        });
+
+       // alert(x);
+    }
+    function myFunctionAmphurMom() {
+
+        var x = document.getElementById("mom_amphur").value;
+
+        $.get('../../Personal/getDistrict?id=' + x, function (data) {
+
+            $('.mom_district').html('');
+            $('.mom_district').html('<select id="mom_district" class="form-control select2">' + data + '</select>');
+            $('#mom_district').select2();
+
+        })
+
+    }
+</script>
+<script>
+    function myFunctionProvinceMar() {
+
+        var x = document.getElementById("mar_province").value;
+
+        $.get('../../Personal/getAmphur?id=' + x, function (data) {
+
+            $('.mar_amphur').html('');
+            $('.mar_amphur').html("<select id='mar_amphur' class='form-control' onchange='myFunctionAmphurMar()'>" + data + "</select>");
+            $('#mar_amphur').select2();
+
+        });
+
+       // alert(x);
+    }
+    function myFunctionAmphurMar() {
+
+        var x = document.getElementById("mar_amphur").value;
+
+        $.get('../../Personal/getDistrict?id=' + x, function (data) {
+
+            $('.mar_district').html('');
+            $('.mar_district').html('<select id="mar_district" class="form-control select2">' + data + '</select>');
+            $('#mar_district').select2();
+
+        })
+
+    }
+</script>
+<script>
+
+    $(document).on('click', '#submit2', function () {
+
+        //
+        var add_num = $('#add_num').val();
+        var add_moo = $('#add_moo').val();
+        var add_type = $('#add_type').val();
+        var add_name = $('#add_name').val();
+        var add_alley = $('#add_alley').val();
+        var add_road = $('#add_road').val();
+        var add_province = $('#add_province').val();
+        var add_amphur = $('#add_amphur').val();
+        var add_district = $('#add_district').val();
+        var add_code = $('#add_code').val();
+        //
+        var add_num1 = $('#add_num1').val();
+        var add_moo1 = $('#add_moo1').val();
+        var add_type1 = $('#add_type1').val();
+        var add_name1 = $('#add_name1').val();
+        var add_alley1 = $('#add_alley1').val();
+        var add_road1 = $('#add_road1').val();
+        var add_province1 = $('#add_province1').val();
+        var add_amphur1 = $('#add_amphur1').val();
+        var add_district1 = $('#add_district1').val();
+        var add_code1 = $('#add_code1').val();
+       
+        $.get('../Personal/address?num=' + add_num + '&moo=' + add_moo + '&type=' + add_type + '&name=' + add_name + '&alley=' + add_alley + '&road=' + add_road + '&province=' + add_province + '&amphur=' + add_amphur + '&district=' + add_district + '&code=' + add_code + '&num1=' + add_num1 + '&moo1=' + add_moo1 + '&type1=' + add_type1 + '&name1=' + add_name1 + '&alley1=' + add_alley1 + '&road1=' + add_road1 + '&province1=' + add_province1 + '&amphur1=' + add_amphur1 + '&district1=' + add_district1 + '&code1=' + add_code1+'&personal='+personal_id, function (data) {
+
+
+            swal("บันทึกที่อยู่!", "เรียบร้อยแล้ว!", "success");
+
+            var $active = $('.wizard .nav-tabs li.active');
+            $active.next().removeClass('disabled');
+            nextTab($active);
+
+            function nextTab(elem) {
+                $(elem).next().find('a[data-toggle="tab"]').click();
+            }
+
+        })
+
+    })
+
+
+</script>
+<script>
+    //contact
+
+    $(document).on('click', '#submit3', function () {
+
+        var email = $('#email').val();
+        var tel = $('#tel').val();
+        var tel_table = $('#tel_table').val();
+        var mobile1 = $('#mobile1').val();
+        var mobile2 = $('#mobile2').val();
+
+        $.get('../Personal/contact?mail=' + email + '&tel=' + tel + '&table=' + tel_table + '&mobile1=' + mobile1 + '&mobile2=' + mobile2+'&person='+personal_id, function (data) {
+
+
+            swal("บันทึกข้อมูลการติดต่อ!", "เรียบร้อยแล้ว!", "success");
+
+            var $active = $('.wizard .nav-tabs li.active');
+            $active.next().removeClass('disabled');
+            nextTab($active);
+
+            function nextTab(elem) {
+                $(elem).next().find('a[data-toggle="tab"]').click();
+            }
+
+            $('#person').val(personal_id);
+
+        })
+
+    })
+    
+</script>
+<script>
+    $(document).on('click', '#submit4', function () {
+
+        var d_name = $('#dad_name').val();
+        var d_lastname = $('#dad_lastname').val();
+        var d_age = $('#dad_age').val();
+        var d_num = $('#dad_num').val();
+        var d_moo = $('#dad_moo').val();
+        var d_province = $('#dadProvince').val();
+        var d_amphur = $('#dad_amphur').val();
+        var d_district = $('#dad_district').val();
+        var d_code = $('#dad_postcode').val();
+        var d_tel = $('#dad_tel').val();
+        var d_mobile = $('#dad_mobile').val();
+
+
+        if (d_province == "0") {
+
+            d_amphur = "0";
+            d_district = "0";
+        }
+
+        ///
+
+        var m_name = $('#mom_name').val();
+        var m_lastname = $('#mom_lastname').val();
+        var m_age = $('#mom_age').val();
+        var m_num = $('#mom_num').val();
+        var m_moo = $('#mom_moo').val();
+        var m_province = $('#mom_province').val();
+        var m_amphur = $('#mom_amphur').val();
+        var m_district = $('#mom_district').val();
+        var m_code = $('#mom_postcode').val();
+        var m_tel = $('#mom_tel').val();
+        var m_mobile = $('#mom_mobile').val();
+
+        if (m_province == "0") {
+
+            m_amphur = "0";
+            m_district = "0";
+        }
+
+        ///
+
+        var ma_name = $('#mar_name').val();
+        var ma_lastname = $('#mar_lastname').val();
+        var ma_age = $('#mar_age').val();
+        var ma_num = $('#mar_num').val();
+        var ma_moo = $('#mar_moo').val();
+        var ma_province = $('#mar_province').val();
+        var ma_amphur = $('#mar_amphur').val();
+        var ma_district = $('#mar_district').val();
+        var ma_code = $('#mar_postcode').val();
+        var ma_tel = $('#mar_tel').val();
+        var ma_mobile = $('#mar_mobile').val();
+
+        if (ma_province == "0") {
+
+            ma_amphur = "0";
+            ma_district = "0";
+        }
+
+
+
+        $.get('../Personal/Family?dad_name=' + d_name + '&dad_lastname=' + d_lastname + '&dad_age=' + d_age + '&dad_num=' + d_num + '&dad_moo=' + d_moo + '&dadProvince=' + d_province + '&dad_amphur=' + d_amphur +'&dad_district=' + d_district + '&dad_postcode=' + d_code + '&dad_tel=' + d_tel + '&dad_mobile=' + d_mobile + '&mom_name=' + m_name + '&mom_lastname=' + m_lastname + '&mom_age=' + m_age + '&mom_num=' + m_num + '&mom_moo=' + m_moo + '&mom_province=' + m_province + '&mom_amphur=' + m_amphur + '&mom_district=' + m_district + '&mom_postcode=' + m_code + '&mom_tel=' + m_tel + '&mom_mobile=' + m_mobile + '&mar_name=' + m_name + '&mar_lastname=' + m_lastname + '&mar_age=' + m_age + '&mar_num=' + ma_num + '&mar_moo=' + ma_moo + '&mar_province=' + ma_province + '&mar_province=' + ma_amphur + '&mar_district=' + ma_district + '&mar_postcode=' + ma_code + '&mar_tel=' + ma_tel + '&mar_mobile=' + ma_mobile + '&person=' + personal_id, function (data) {
+
+
+          //  alert(data);
+            swal("บันทึกข้อมูลครอบครัว!", "เรียบร้อยแล้ว!", "success");
+
+            var $active = $('.wizard .nav-tabs li.active');
+            $active.next().removeClass('disabled');
+            nextTab($active);
+
+            function nextTab(elem) {
+                $(elem).next().find('a[data-toggle="tab"]').click();
+            }
+
+
+
+        })
+
+
+        //var txt = "บิดา \n"+
+        //    "ชื่อ "+d_name+" "+d_lastname+" \n"+
+        //    "อายุ " + d_age + " \n"+
+        //    "ที่อยู่ เลขที่ " + d_num + " หมู่ "+d_moo+" \n"+
+        //    "ตำบล "+d_district+" \n"+
+        //    "อำเภอ "+d_amphur+" \n"+
+        //    "จังหวัด "+d_province+" \n"+
+        //    "ไปรษณีย์ "+d_code+
+        //    "โทร "+d_tel+" มือถือ "+d_mobile;
+
+        //alert(txt);
+
+    })
+</script>
+@*<script>
+    $(document).on('click', 'a[href="#step1"]', function () {
+
+        alert('tab1');
+
+    })
+    $(document).on('click', 'a[href="#step2"]', function () {
+
+        alert('tab2');
+
+    })
+    $(document).on('click', 'a[href="#step3"]', function () {
+
+        alert('tab3');
+
+    })
+    $(document).on('click', 'a[href="#step4"]', function () {
+
+        alert('tab4');
+
+    })
+    $(document).on('click', 'a[href="#step5"]', function () {
+
+        alert('tab5');
+
+    })
+    $(document).on('click', 'a[href="#step6"]', function () {
+
+        alert('tab6');
+
+    })
+</script>*@
+
+@*<script>
+    $(document).on('click', 'a[href="#step1"]', function () {
+
+
+        $.get('../../Personal/tabPerson?tab=step1', function(){
+
+        })
+
+     //   location.reload();
+
+    })
+    $(document).on('click', 'a[href="#step2"]', function () {
+
+
+
+        $.get('../../Personal/tabPerson?tab=step2', function () {
+
+        })
+
+       // location.reload();
+
+    })
+    $(document).on('click', 'a[href="#step3"]', function () {
+
+
+        $.get('../../Personal/tabPerson?tab=step3', function () {
+
+        })
+
+      //  location.reload();
+
+    })
+    $(document).on('click', 'a[href="#step4"]', function () {
+
+        $.get('../../Personal/tabPerson?tab=step4', function () {
+
+        })
+
+       // location.reload();
+
+    })
+    $(document).on('click', 'a[href="#step5"]', function () {
+
+        $.get('../../Personal/tabPerson?tab=step5', function () {
+
+        })
+
+      //  location.reload();
+
+    })
+    $(document).on('click', 'a[href="#step6"]', function () {
+
+        $.get('../../Personal/tabPerson?tab=step6', function () {
+
+        })
+
+      //  location.reload();
+
+    })
+    $(document).on('click', 'a[href="#step7"]', function () {
+
+        $.get('../../Personal/tabPerson?tab=step7', function () {
+
+        })
+
+        //  location.reload();
+
+    })
+    $(document).on('click', 'a[href="#step8"]', function () {
+
+        $.get('../../Personal/tabPerson?tab=step8', function () {
+
+        })
+
+        //  location.reload();
+
+    })
+</script>*@

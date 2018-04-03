@@ -1,0 +1,330 @@
+﻿@{
+    Layout = "_Layout";
+}
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">บันทึกการลาออกจากกองทุนของพนักงาน</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        บันทึกการลาออกจากกองทุนของพนักงาน
+                    </div>
+                    <div class="panel-body">
+                        @{ Html.BeginForm("insert_fundChange", "Fund", FormMethod.Post);}
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                รหัสพนักงาน
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.DropDownList("emp", ViewData["emp"] as List<SelectListItem>, new { @class = "form-control select2", @style = "width:100%", @onchange = "empChange();" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <h4>ข้อมูลพนักงาน</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                ชื่อ-นามสกุล
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("emp_name", "", new { @class = "form-control", @readonly = true })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                ตำแหน่ง
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("emp_position", "", new { @class = "form-control", @readonly = true })
+                                            </div>
+                                            <div class="col-md-2">
+                                                บริษัท
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("emp_company", "", new { @class = "form-control", @readonly = true })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                ฝ่าย
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("emp_section", "", new { @class = "form-control", @readonly = true })
+                                            </div>
+                                            <div class="col-md-2">
+                                                แผนก
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("emp_department", "", new { @class = "form-control", @readonly = true })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                วันที่เริ่มงาน
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("emp_start", "", new { @class = "form-control", @readonly = true })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <h4>ข้อมูลกองทุน</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-6 panel panel-primary">
+                                                <div class="panel-body">
+                                                    <div class="form-group">
+                                                        <div class="row">
+                                                            <div class="col-md-12 text-center">
+                                                                <b>กองทุนเดิม</b>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                เลือกกองทุนที่ต้องเดิมที่ต้องการเปลี่ยน
+                                                            </div>
+                                                            <div class="col-md-4 fund">
+
+                                                                @Html.DropDownList("fund", new List<SelectListItem> { new SelectListItem { Text = "เลือกกองทุน" } }, new { @class = "form-control", @disabled = false })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                วันที่เป็นสมาชิก
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                @Html.TextBox("fund_start", "", new { @class = "form-control", @readonly = true })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                อายุสมาชิก (ปี)
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                @Html.TextBox("fund_age_year", "", new { @class = "form-control", @readonly = true })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                อายุสมาชิก (วัน)
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                @Html.TextBox("fund_age_day", "", new { @class = "form-control", @readonly = true })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 panel panel-primary">
+                                                <div class="panel-body">
+                                                    <div class="form-group">
+                                                        <div class="row">
+                                                            <div class="col-md-12 text-center">
+                                                                <b>เลือกกองทุนที่ต้องการเปลี่ยน</b>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                เลือกกองทุน
+                                                            </div>
+                                                            <div class="col-md-4 fundNew">
+
+                                                                @Html.DropDownList("fund_new", new List<SelectListItem> { new SelectListItem { Text = "เลือกกองทุน" } }, new { @class = "form-control", @disabled = false })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                เลขที่กองทุน
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                @Html.TextBox("fund_code", "", new { @class = "form-control", @readonly = true })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                ชื่อกองทุน
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                @Html.TextBox("fund_name", "", new { @class = "form-control", @readonly = true })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                ชื่อบริษัท
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                @Html.TextBox("fund_comp", "", new { @class = "form-control", @readonly = true })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                 
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                
+                                    <hr />
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <h4>ข้อมูลการโอนย้ายสมาชิก</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                วันที่โอนย้าย
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("fund_change_date", "", new { @class = "form-control datepicker" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                ประเภทการโอนย้าย
+                                            </div>
+                                            <div class="col-md-10">
+                                                <input type="radio" value="C" id="type" name="type" checked="checked" /> โอนย้ายบริษัท
+                                                <input type="radio" value="F" id="type" name="type" /> โอนย้ายกองทุน
+                                                <input type="radio" value="A" id="type" name="type" /> โอนย้ายกองทุนและบริษัท
+                                            </div>
+                                        </div>
+                                    </div>
+                                  
+                                    <hr />
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-12 text-center">
+                                                <a class="btn btn-default">ยกเลิก</a>
+                                                <button type="submit" class="btn btn-primary"><span><i class="fa fa-save"></i></span> บันทึกข้อมูล</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @{ Html.EndForm();}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery-3.2.1.min.js"></script>
+    <script>
+        var emp;
+
+        function empChange() {
+
+            var x = document.getElementById("emp").value;
+            emp = x;
+            //  alert(x);
+            $.get('../../Employee/select_data_resign?id=' + x, function (data) {
+
+                var res = data.split('^');
+                $('#emp_name').val(res[0]);
+                $('#emp_position').val(res[1]);
+                $('#emp_company').val(res[2]);
+                $('#emp_section').val(res[3]);
+                $('#emp_department').val(res[4]);
+                $('#emp_start').val(res[5]);
+
+            })
+
+            $.get('../../Fund/optionFund?id=' + x, function (data) {
+
+                $('.fund').html('<select id="fund" name="fund" class="form-control">' + data + '</option>');
+
+            })
+
+            // alert(x);
+        };
+
+
+        $(document).on('change', '#fund', function () {
+
+            var x = $('#fund').val();
+
+           // alert(x);
+
+            $.get('../../Fund/detailFund?id=' + x, function (data) {
+
+                var res = data.split('^');
+
+                $('#fund_start').val(res[0]);
+                $('#fund_age_year').val(res[1]);
+                $('#fund_age_day').val(res[2]);
+                $('.fundNew').html('<select id="fund_new" name="fund_new" class="form-control">' + res[3] + '</option>');
+
+            })
+
+
+        })
+        $(document).on('change', '#fund_new', function () {
+
+            var x = $('#fund_new').val();
+            
+            $.get('../../Fund/data_fund_new?id=' + x, function (data) {
+
+                var res = data.split('^');
+
+
+                $('#fund_code').val(res[0]);
+                $('#fund_name').val(res[1]);
+                $('#fund_comp').val('');
+
+            })
+            //alert(x);
+        })
+    </script>
+

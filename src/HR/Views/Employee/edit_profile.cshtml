@@ -1,0 +1,164 @@
+﻿
+@{Html.BeginForm("update_person_profile", "Personal", FormMethod.Post);}
+<div class="form-group">
+    <div class="row">
+        <div class="col-md-2">
+            เพศ
+        </div>
+        <div class="col-md-4">
+
+            @{bool turn1, turn;} 
+            @*@{if (ViewData["gender"].ToString() == "หญิง")
+                {
+
+                    turn = true;
+                    turn1 = false;
+
+                }
+                else {
+
+                    turn = false;
+                    turn1 = true;
+
+                }
+            }*@
+
+         @*   @Html.DropDownList("gender_edit", new List<SelectListItem> { new SelectListItem { Text = "ชาย", Selected = turn1 }, new SelectListItem { Text = "หญิง", Selected = turn } }, new { @class = "form-control" })*@
+
+
+        </div>
+        <div class="col-md-2">
+            กรุ๊ปเลือด
+        </div>
+        <div class="col-md-4">
+            @Html.TextBox("blood_edit", ViewData["blood"], new { @class = "form-control" })
+            @Html.TextBox("emp_id", ViewData["emp_id"], new { @class = "form-control", @type = "hidden" })
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="row">
+        <div class="col-md-2">
+            เลขประจำตัวประชาชน
+        </div>
+        <div class="col-md-4">
+            @Html.TextBox("national_id_edit", ViewData["identification"], new { @class = "form-control" })
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="row">
+        <div class="col-md-2">
+            วันที่ออกบัตร
+        </div>
+        <div class="col-md-4">
+            @Html.TextBox("national_start_edit", ViewData["date_issue"], new { @class = "form-control datepicker" })
+        </div>
+        <div class="col-md-2">
+            วันหมดอายุ
+        </div>
+        <div class="col-md-4">
+            @Html.TextBox("national_end_edit", ViewData["expired_date"], new { @class = "form-control datepicker" })
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="row">
+        <div class="col-md-2">
+            วัน/เดือน/ปี เกิด
+        </div>
+        <div class="col-md-4">
+            @Html.TextBox("birthday_edit", ViewData["birthday_format"], new { @class = "form-control datepicker" })
+        </div>
+        <div class="col-md-2">
+            อายุ
+        </div>
+        <div class="col-md-4">
+            @Html.TextBox("age_edit", ViewData["age"], new { @class = "form-control" })
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="row">
+        <div class="col-md-2">
+            สัญชาติ
+        </div>
+        <div class="col-md-4">
+            @Html.TextBox("nationality_edit", ViewData["nationality"], new { @class = "form-control" })
+        </div>
+        <div class="col-md-2">
+            เชื้อชาติ
+        </div>
+        <div class="col-md-4">
+            @Html.TextBox("race_edit", ViewData["race"], new { @class = "form-control" })
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="row">
+        <div class="col-md-2">
+            ศาสนา
+        </div>
+        <div class="col-md-4">
+            @Html.TextBox("religion_edit", ViewData["religion"], new { @class = "form-control" })
+        </div>
+
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="row">
+        <div class="col-md-2">
+            สถานภาพสมรส
+        </div>
+        <div class="col-md-4">
+
+            @{ 
+
+                bool m1, m2, m3;
+
+                if (ViewData["marital"].ToString() == "โสด")
+                {
+
+                    m1 = true;
+                    m2 = false;
+                    m3 = false;
+
+                }
+                else if (ViewData["marital"].ToString() == "สมรส")
+                {
+
+
+                    m1 = false;
+                    m2 = true;
+                    m3 = false;
+
+
+                }
+                else {
+
+
+                    m1 = false;
+                    m2 = false;
+                    m3 = true;
+
+
+                }
+
+
+
+            }
+
+            @Html.DropDownList("marital_edit", new List<SelectListItem> { new SelectListItem { Text = "โสด", Selected = m1 }, new SelectListItem { Text = "สมรส", Selected = m2 }, new SelectListItem { Text = "หย่า", Selected = m3 } }, new { @class = "form-control" })
+        </div>
+
+</div>
+</div>
+<div class="form-group">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <input class="btn btn-primary" type="submit" value="แก้ไขข้อมูล"/>
+        </div>
+    </div>
+</div>
+@{Html.EndForm();}

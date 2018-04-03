@@ -1,0 +1,1735 @@
+﻿@{
+    Layout = "_Layout";
+}
+@using Microsoft.AspNetCore.Mvc;
+@using Microsoft.AspNetCore.Http;
+@using System.Data;
+@using HR.Models;
+@{
+    string tab = Context.Session.GetString("tabClick");
+}
+<style>
+    .wizard {
+        margin: 20px auto;
+        background: #fff;
+    }
+
+        .wizard .nav-tabs {
+            position: relative;
+            margin: 40px auto;
+            margin-bottom: 0;
+            border-bottom-color: #e0e0e0;
+        }
+
+        .wizard > div.wizard-inner {
+            position: relative;
+        }
+
+    .connecting-line {
+        height: 2px;
+        background: #e0e0e0;
+        position: absolute;
+        width: 80%;
+        margin: 0 auto;
+        left: 0;
+        right: 0;
+        top: 50%;
+        z-index: 1;
+    }
+
+    .wizard .nav-tabs > li.active > a, .wizard .nav-tabs > li.active > a:hover, .wizard .nav-tabs > li.active > a:focus {
+        color: #555555;
+        cursor: default;
+        border: 0;
+        border-bottom-color: transparent;
+    }
+
+    span.round-tab {
+        width: 70px;
+        height: 70px;
+        line-height: 70px;
+        display: inline-block;
+        border-radius: 100px;
+        background: #fff;
+        border: 2px solid #e0e0e0;
+        z-index: 2;
+        position: absolute;
+        left: 0;
+        text-align: center;
+        font-size: 25px;
+    }
+
+        span.round-tab i {
+            color: #555555;
+        }
+
+    .wizard li.active span.round-tab {
+        background: #fff;
+        border: 2px solid #5bc0de;
+    }
+
+        .wizard li.active span.round-tab i {
+            color: #5bc0de;
+        }
+
+    span.round-tab:hover {
+        color: #333;
+        border: 2px solid #333;
+    }
+
+    .wizard .nav-tabs > li {
+        width: 12%;
+    }
+
+    .wizard li:after {
+        content: " ";
+        position: absolute;
+        left: 46%;
+        opacity: 0;
+        margin: 0 auto;
+        bottom: 0px;
+        border: 5px solid transparent;
+        border-bottom-color: #5bc0de;
+        transition: 0.1s ease-in-out;
+    }
+
+    .wizard li.active:after {
+        content: " ";
+        position: absolute;
+        left: 60%; /*46%;*/
+        opacity: 1;
+        margin: 0 auto;
+        bottom: 0px;
+        border: 10px solid transparent;
+        border-bottom-color: #5bc0de;
+    }
+
+    .wizard .nav-tabs > li a {
+        width: 5px; /*70px;*/
+        height: 70px;
+        margin: 20px auto;
+        border-radius: 100%;
+        padding: 0;
+    }
+
+        .wizard .nav-tabs > li a:hover {
+            background: transparent;
+        }
+
+    .wizard .tab-pane {
+        position: relative;
+        padding-top: 50px;
+    }
+
+    .wizard h3 {
+        margin-top: 0;
+    }
+
+    .container {
+        width: 100% !important;
+    }
+
+    @@media( max-width : 100% ) {
+        .container {
+            width: 100% !important;
+        }
+
+        .wizard {
+            width: 90%;
+            height: auto !important;
+        }
+
+        span.round-tab {
+            font-size: 16px;
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+        }
+
+        .wizard .nav-tabs > li a {
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+        }
+
+        .wizard li.active:after {
+            content: " ";
+            position: absolute;
+            left: 35%;
+        }
+    }
+    label {
+        font-weight: normal;
+    
+    }
+</style>
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-9">
+            <h1 class="page-header">ข้อมูลส่วนบุคคล</h1>
+           
+        </div>
+        <div class="col-lg-3 text-center">
+          <a asp-area="" asp-controller="Personal" asp-action="editPersonal" asp-route-person="@ViewData["ps_id"]" class="page-header btn btn-primary"><i class="fa fa-edit"></i> แก้ไขข้อมูล</a>
+       
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!---wizard--->
+    <div class="container">
+        <div class="form-group">
+            <div class="row">
+                <section>
+                    <div class="wizard">
+                        <div class="wizard-inner">
+
+                            <div class="connecting-line"></div>
+                            <ul class="nav nav-tabs" role="tablist">
+
+                                <li role="presentation" class="active text-right">
+                                    <a href="#step1" data-toggle="tab" aria-controls="step1" calss="step1" role="tab" title="Step 1">
+                                        <span class="round-tab">
+                                            <i class="glyphicon glyphicon-user"></i>
+                                        </span>
+                                        <br />
+                                    </a>
+                                    <h4>ข้อมูลส่วนตัว</h4>
+                                </li>
+
+                                <li role="presentation" class="text-right next-step">
+                                    <a href="#step2" data-toggle="tab" aria-controls="step2" class="step2" role="tab" title="Step 2">
+                                        <span class="round-tab">
+                                            <i class="glyphicon glyphicon-home"></i>
+                                        </span>
+                                    </a>
+                                    <h4>ข้อมูลที่อยู่</h4>
+                                </li>
+                                <li role="presentation" class="text-right next-step">
+                                    <a href="#step3" data-toggle="tab" aria-controls="step3" class="step3" role="tab" title="Step 3">
+                                        <span class="round-tab">
+                                            <i class="glyphicon glyphicon-earphone"></i>
+                                        </span>
+                                    </a>
+                                    <h4>ข้อมูลการติดต่อ</h4>
+                                </li>
+                                <li role="presentation" class="text-right next-step">
+                                    <a href="#step4" data-toggle="tab" aria-controls="step4" class="step4" role="tab" title="Step 4">
+                                        <span class="round-tab">
+                                            <i class="fa fa-group"></i>
+                                        </span>
+                                    </a>
+                                    <h4>สถานะทางครอบครัว</h4>
+                                </li>
+                                <li role="presentation" class="text-right next-step">
+                                    <a href="#step5" data-toggle="tab" aria-controls="step5" class="step5" role="tab" title="Step 5">
+                                        <span class="round-tab">
+                                            <i class="fa fa-group"></i>
+                                        </span>
+                                    </a>
+                                    <h4>ข้อมูลบุตร</h4>
+                                </li>
+                                <li role="presentation" class="text-right next-step">
+                                    <a href="#step6" data-toggle="tab" aria-controls="step6" class="step6" role="tab" title="Step 6">
+                                        <span class="round-tab">
+                                            <i class="glyphicon glyphicon-education"></i>
+                                        </span>
+                                    </a>
+                                    <h4>ประวัติการศึกษา</h4>
+                                </li>
+                                <li role="presentation" class="text-right next-step">
+                                    <a href="#step7" data-toggle="tab" aria-controls="step7" class="step7" role="tab" title="Step 7">
+                                        <span class="round-tab">
+                                            <i class="glyphicon glyphicon-folder-open"></i>
+                                        </span>
+                                    </a>
+                                    <h4>ประวัติการผ่านงาน</h4>
+                                </li>
+                                <li role="presentation" class="text-right next-step">
+                                    <a href="#step8" data-toggle="tab" aria-controls="step8" class="step8" role="tab" title="Step 8">
+                                        <span class="round-tab">
+                                            <i class="glyphicon glyphicon-folder-open"></i>
+                                        </span>
+                                    </a>
+                                    <h4>ประวัติการฝึกอบรม</h4>
+                                </li>
+
+                            </ul>
+                        </div>
+
+                        <div role="form">
+                            <div class="tab-content">
+                                <div class="tab-pane active responsive" role="tabpanel" id="step1" style="margin: 0% 7% 0% 5%;">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                [ ภาษาไทย ]
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                คำนำหน้า
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.Label("aaaa",ViewData["prefix_th_name"].ToString())
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+
+                                            <div class="col-md-2">
+                                                ชื่อ
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.Label("aaaa", ViewData["name_th"].ToString())
+                                            </div>
+                                            <div class="col-md-2">
+                                                นามสกุล
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.Label("aaaa", ViewData["lastname_th"].ToString())
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                [ ภาษาอังกฤษ ]
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                คำนำหน้า
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.Label("aaaa", ViewData["prefix_en_name"].ToString())
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                ชื่อ
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.Label("aaaa", ViewData["name_en"].ToString())
+                                            </div>
+                                            <div class="col-md-2">
+                                                นามสกุล
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.Label("aaaa", ViewData["lastname_en"].ToString())
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                เพศ
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.Label("a", ViewData["gender"].ToString())
+                                            </div>
+                                            <div class="col-md-2">
+                                                กรุ๊ปเลือด
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.Label("aaaa", ViewData["blood"].ToString())
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                เลขประจำตัวประชาชน
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.Label("aaaa", ViewData["national_id"].ToString())
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                วันที่ออกบัตร
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.Label("aaaa", ViewData["national_start"].ToString())
+                                            </div>
+                                            <div class="col-md-2">
+                                                วันหมดอายุ
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.Label("aaaa", ViewData["national_end"].ToString())
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                วัน/เดือน/ปี เกิด
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.Label("aaaa", ViewData["birthday"].ToString())
+                                            </div>
+                                            <div class="col-md-2">
+                                                อายุ
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.Label("aaaa", ViewData["age"].ToString())
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                สัญชาติ
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.Label("aaaa", ViewData["nationality"].ToString())
+                                            </div>
+                                            <div class="col-md-2">
+                                                เชื้อชาติ
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.Label("aaaa", ViewData["race"].ToString())
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                ศาสนา
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.Label("aaaa", ViewData["religion"].ToString())
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    @*<div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    น้ำหนัก
+                                                </div>
+                                                <div class="col-md-4">
+                                                    @Html.TextBox("aaaa", "", new { @class = "form-control" })
+                                                </div>
+                                                <div class="col-md-2">
+                                                    ส่วนสูง
+                                                </div>
+                                                <div class="col-md-4">
+                                                    @Html.TextBox("aaaa", "", new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                        </div>*@
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                สถานภาพสมรส
+                                            </div>
+                                            <div class="col-md-4">
+                                               
+                                                @Html.Label("aaaa", ViewData["marital"].ToString())
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group text-center">
+
+                                        @*<button type="button" class="btn btn-primary next-step responsive">บันทึก</button>*@
+
+                                    </div>
+                                </div>
+                                <div class="tab-pane responsive" role="tabpanel" id="step2" style="margin: 0% 7% 0% 5%;">
+
+                                    <div class="col-md-6 col-lg-6">
+                                        ที่อยู่ตามทะเบียนบ้าน
+                                        <hr />
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    เลขที่
+                                                </div>
+                                                <div class="col-md-4">
+                                                    @Html.Label("add_num", ViewData["add_num"].ToString())
+                                                </div>
+                                                <div class="col-md-2">
+                                                    หมู่ที่
+                                                </div>
+                                                <div class="col-md-4">
+                                                    @Html.Label("add_moo", ViewData["add_moo"].ToString())
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    ประเภทที่พัก
+                                                </div>
+                                                <div class="col-md-10">
+                                                    @Html.Label("add_type", ViewData["add_type_name"].ToString())
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    ชื่อ
+                                                </div>
+                                                <div class="col-md-10">
+                                                    @Html.Label("add_name", ViewData["add_name"].ToString())
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    ซอย
+                                                </div>
+                                                <div class="col-md-10">
+                                                    @Html.Label("add_alley", ViewData["add_alley"].ToString())
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    ถนน
+                                                </div>
+                                                <div class="col-md-10">
+                                                    @Html.Label("add_road", ViewData["add_road"].ToString())
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    แขวง/ตำบล
+                                                </div>
+                                                <div class="col-md-10">
+                                                    @Html.Label("add_district", ViewData["add_district_name"].ToString())
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    เขต/อำเภอ
+                                                </div>
+                                                <div class="col-md-10">
+                                                    @Html.Label("add_amphur", ViewData["add_amphur_name"].ToString())
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    จังหวัด
+                                                </div>
+                                                <div class="col-md-10">
+                                                    @Html.Label("add_province", ViewData["add_province_name"].ToString())
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    รหัสไปรษณีย์
+                                                </div>
+                                                <div class="col-md-10">
+                                                    @Html.Label("add_code", ViewData["add_postcode"].ToString())
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                    <div class="col-md-6 col-lg-6">
+                                        ที่อยู่ที่ติดต่อได้
+                                        <hr />
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    เลขที่
+                                                </div>
+                                                <div class="col-md-4">
+                                                    @Html.Label("add_num1", ViewData["call_num"].ToString())
+                                                </div>
+                                                <div class="col-md-2">
+                                                    หมู่ที่
+                                                </div>
+                                                <div class="col-md-4">
+                                                    @Html.Label("add_moo1", ViewData["call_moo"].ToString())
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    ประเภทที่พัก
+                                                </div>
+                                                <div class="col-md-10">
+                                                   
+                                                    @Html.Label("call_type", ViewData["call_type_name"].ToString())
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    ชื่อ
+                                                </div>
+                                                <div class="col-md-10">
+                                                    @Html.Label("add_name1", ViewData["call_name"].ToString())
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    ซอย
+                                                </div>
+                                                <div class="col-md-10">
+                                                    @Html.Label("add_alley1", ViewData["call_alley"].ToString())
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    ถนน
+                                                </div>
+                                                <div class="col-md-10">
+                                                    @Html.Label("add_road1", ViewData["call_road"].ToString())
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    แขวง/ตำบล
+                                                </div>
+                                                <div class="col-md-10">
+                                                    @Html.Label("add_district1", ViewData["call_district_name"].ToString())
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    เขต/อำเภอ
+                                                </div>
+                                                <div class="col-md-10">
+                                                    @Html.Label("add_amphur1", ViewData["call_amphur_name"].ToString())
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    จังหวัด
+                                                </div>
+                                                <div class="col-md-10">
+                                                    @Html.Label("add_province1", ViewData["call_province_name"].ToString())
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    รหัสไปรษณีย์
+                                                </div>
+                                                <div class="col-md-10">
+                                                    @Html.Label("add_code1", ViewData["call_postcode"].ToString())
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <hr />
+                                    <div class="form-group text-center">
+
+                                        @*<button type="button" class="btn btn-primary next-step responsive">บันทึก</button>*@
+
+                                    </div>
+
+                                </div>
+                                <div class="tab-pane responsive" role="tabpanel" id="step3" style="margin: 0% 7% 0% 5%;">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                Email :
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.Label("aaaa", ViewData["ct_mail"].ToString())
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                โทรศัพท์ :
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.Label("aaaa", ViewData["ct_phone"].ToString())
+                                            </div>
+                                            <div class="col-md-2">
+                                                เบอร์โต๊ะ :
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.Label("aaaa", ViewData["ct_table"].ToString())
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                มือถือ 1 :
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.Label("aaaa", ViewData["ct_mobile1"].ToString())
+                                            </div>
+                                            <div class="col-md-2">
+                                                มือถือ 2 :
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.Label("aaaa", ViewData["ct_mobile2"].ToString())
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+                                    <hr />
+                                    <div class="form-group text-center">
+
+                                        @*<button type="button" class="btn btn-primary next-step responsive">บันทึก</button>*@
+
+                                    </div>
+
+                                </div>
+                                <div class="tab-pane responsive" role="tabpanel" id="step4" style="margin: 0% 7% 0% 5%;">
+                                    ข้อมูล บิดา
+                                    <hr />
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                ชื่อ
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.Label("aa", ViewData["d_name"].ToString())
+                                            </div>
+                                            <div class="col-md-2">
+                                                นามสกุล
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.Label("aa", ViewData["d_last"].ToString())
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                อายุ
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.Label("aa", ViewData["d_age"].ToString())
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                ที่อยู่ เลขที่
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.Label("aa", ViewData["d_num"].ToString())
+                                            </div>
+                                            <div class="col-md-2">
+                                                ตำบล/แขวง
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.Label("aa", ViewData["d_district_name"].ToString())
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                อำเภอ/เขต
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.Label("aa", ViewData["d_amphur_name"].ToString())
+                                            </div>
+                                            <div class="col-md-2">
+                                                จังหวัด
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.Label("aa", ViewData["d_province_name"].ToString())
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                รหัสไปรษณีย์
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.Label("aa", ViewData["d_postcode"].ToString())
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                โทรศัพท์
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.Label("aa", ViewData["d_tel"].ToString())
+                                            </div>
+                                            <div class="col-md-2">
+                                                มือถือ
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.Label("aa", ViewData["d_mobile"].ToString())
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <hr />
+                                    ข้อมูล มารดา
+                                    <hr />
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                ชื่อ
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.Label("aa", ViewData["m_name"].ToString())
+                                            </div>
+                                            <div class="col-md-2">
+                                                นามสกุล
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.Label("aa", ViewData["m_last"].ToString())
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                อายุ
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.Label("aa", ViewData["m_age"].ToString())
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                ที่อยู่ เลขที่
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.Label("aa", ViewData["m_num"].ToString())
+                                            </div>
+                                            <div class="col-md-2">
+                                                ตำบล/แขวง
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.Label("aa", ViewData["m_district_name"].ToString())
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                อำเภอ/เขต
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.Label("aa", ViewData["m_amphur_name"].ToString())
+                                            </div>
+                                            <div class="col-md-2">
+                                                จังหวัด
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.Label("aa", ViewData["m_province_name"].ToString())
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                รหัสไปรษณีย์
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.Label("aa", ViewData["m_postcode"].ToString())
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                โทรศัพท์
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.Label("aa", ViewData["m_tel"].ToString())
+                                            </div>
+                                            <div class="col-md-2">
+                                                มือถือ
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.Label("aa", ViewData["m_mobile"].ToString())
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <hr />
+                                    ข้อมูล คู่สมรส
+                                    <hr />
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                ชื่อ
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.Label("aa", ViewData["h_name"].ToString())
+                                            </div>
+                                            <div class="col-md-2">
+                                                นามสกุล
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.Label("aa", ViewData["h_last"].ToString())
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                อายุ
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.Label("aa", ViewData["h_age"].ToString())
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                ที่อยู่ เลขที่
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.Label("aa", ViewData["h_num"].ToString())
+                                            </div>
+                                            <div class="col-md-2">
+                                                ตำบล/แขวง
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.Label("aa", ViewData["h_district_name"].ToString())
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                อำเภอ/เขต
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.Label("aa", ViewData["h_amphur_name"].ToString())
+                                            </div>
+                                            <div class="col-md-2">
+                                                จังหวัด
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.Label("aa", ViewData["h_province_name"].ToString())
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                รหัสไปรษณีย์
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.Label("aa", ViewData["h_postcode"].ToString())
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                โทรศัพท์
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.Label("aa", ViewData["h_tel"].ToString())
+                                            </div>
+                                            <div class="col-md-2">
+                                                มือถือ
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.Label("aa", ViewData["h_mobile"].ToString())
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <hr />
+                                   
+                                </div>
+
+                                <div class="tab-pane responsive" role="tabpanel" id="step5" style="margin: 0% 7% 0% 5%;">
+                                                                     
+                                    @{ int i = 1;}
+                                    @foreach (var item in ViewData["data_kid"] as List<personal_kidModel>)
+                                    {
+
+                                        <div class="panel panel-info">
+                                            <div class="panel-heading">
+                                                บุตรคนที่ @i
+                                            </div>
+                                            <div class="panel-body">
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-md-2">
+                                                            ชื่อ :
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            @Html.Label("k_name", item.kid_name)
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            นามสกุล :
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            @Html.Label("k_name", item.kid_lastname)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-md-2">
+                                                            อายุ :
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            @Html.Label("k_name", item.kid_age)
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            กำลังศึกษา :
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            @{
+                                                                
+                                                                if (item.kid_study_status.ToString() == "yes")
+                                                                {
+
+                                                                    ViewData["study_status"] = "ใช่";
+                                                                }
+                                                                else
+                                                                {
+
+                                                                    ViewData["study_status"] = "ไม่ใช่";
+
+                                                                }
+
+                                                            }
+                                                            @Html.Label("study", ViewData["study_status"].ToString())
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-md-2">
+                                                            ระดับการศึกษา :
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            @Html.Label("k_name", item.kid_study_level)
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            สถานศึกษา :
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            @Html.Label("k_name", item.kid_study_school)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                           
+                                        </div>
+                                                                    i++;
+                                                                }
+                                    <hr />
+
+                                </div>
+                                <div class="tab-pane responsive" role="tabpanel" id="step6" style="margin: 0% 7% 0% 5%;">
+                                   
+                                    @{ int numStudy = 1;}
+                                    @foreach (var item in ViewData["data_study"] as List<personal_studyModel>)
+                                    {
+                                        <div class="panel panel-info">
+                                            <div class="panel-heading">
+                                                ประวัติการศึกษา @numStudy
+                                            </div>
+                                            <div class="panel-body">
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-md-2">
+                                                            ปีการศึกษา
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            @Html.Label("a", item.study_year)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-md-2">
+                                                            วุฒิการศึกษา
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            @Html.Label("a", item.study_degree)
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            สาขา/คณะ
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            @Html.Label("a", item.study_branch)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-md-2">
+                                                            สถานศึกษา
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            @Html.Label("a", item.study_academy)
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            เกรดเฉลี่ย
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            @Html.Label("a", item.study_gpa)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                         
+                                        </div>
+                                        numStudy++;
+
+                                    }
+                                </div>
+                                <div class="tab-pane responsive" role="tabpanel" id="step7" style="margin: 0% 7% 0% 5%;">
+                                    
+                                    @{int numWork = 1;}
+                                    @foreach (var item in ViewData["data_work"] as List<personal_workModel>)
+                                    {
+                                        <div class="panel panel-info">
+                                            <div class="panel-heading">
+                                                ประวัติการทำงาน @numWork
+                                            </div>
+                                            <div class="panel-body">
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-md-2">
+                                                            ชื่อบริษัท :
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            @Html.Label("a", item.work_company)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-md-2">
+                                                            ตำแหน่ง :
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            @Html.Label("a", item.work_position)
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            ที่อยู่ :
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            @Html.Label("a", item.work_address)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-md-2">
+                                                            วันที่เริ่มงาน :
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            @Html.Label("a", item.work_start)
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            วันที่ลาออก :
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            @Html.Label("a", item.work_end)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                           
+                                        </div>
+                                        numWork++;
+                                    }
+                                </div>
+
+                                <div class="tab-pane responsive" role="tabpanel" id="step8" style="margin: 0% 7% 0% 5%;">
+                                 
+                                    @{ int numTrain = 1;}
+                                    @foreach (var item in ViewData["data_train"] as List<personal_trainModel>)
+                                    {
+                                        <div class="panel panel-info">
+                                            <div class="panel-heading">
+                                                ประวัติการฝึกอบรม @numTrain
+                                            </div>
+                                            <div class="panel-body">
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-md-2">
+                                                            เรื่องที่อบรม
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            @Html.Label("a", item.train_title)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-md-2">
+                                                            สถานที่
+                                                        </div>
+                                                        <div class="col-md-10">
+                                                            @Html.Label("a", item.train_location)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-md-2">
+                                                            วันที่เริ่มอบรม
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            @Html.Label("a", item.train_start)
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            วันที่สิ้นสุดการอบรม
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            @Html.Label("a", item.train_end)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                         
+                                        </div>
+                                        numTrain++;
+                                    }
+                                </div>
+
+                                <div class="clearfix"></div>
+                                <hr>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+    <!----/wizard------>
+    @Html.TextBox("tabClick", tab, new { @class = "form-control", @type = "hidden" })
+</div>
+<script src="~/lib/jquery/dist/jquery-3.2.1.min.js"></script>
+<script>
+    function stepWizard() {
+
+        //Initialize tooltips
+        $('.nav-tabs > li a[title]').tooltip();
+
+        //Wizard
+        $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
+
+            var $target = $(e.target);
+
+            if ($target.parent().hasClass('disabled')) {
+                return false;
+            }
+        });
+
+        $(".next-step").click(function (e) {
+
+            var $active = $('.wizard .nav-tabs li.active');
+            $active.next().removeClass('disabled');
+            nextTab($active);
+
+        });
+        $(".prev-step").click(function (e) {
+
+            var $active = $('.wizard .nav-tabs li.active');
+            prevTab($active);
+
+        });
+
+
+        function nextTab(elem) {
+            $(elem).next().find('a[data-toggle="tab"]').click();
+        }
+        function prevTab(elem) {
+            $(elem).prev().find('a[data-toggle="tab"]').click();
+        }
+    }
+</script>
+<script>
+    $(document).ready(function () {
+        stepWizard();
+
+        $('.submit_kid').hide();
+        $('.submitStudy').hide();
+        $('.submitWork').hide();
+        $('.submitTrain').hide();
+
+        var step = $('#tabClick').val();
+        //  alert("tab = " + step);
+
+        if (step != "") {
+
+            $('.' + step).click();
+
+        } else {
+
+            $('.step1').click();
+
+        }
+
+    })
+</script>
+<script>
+    $(document).on('keyup', '.numKid', function () {
+
+        var num = $('.numKid').val();
+        var detail="";
+        if (num >= 1) {
+        for (var i = 0; i < num; i++) {
+
+
+            $('.submit_kid').show();
+
+            detail += '<hr/><div class="box box-danger">' +
+                                             '<div class="box-header with-border">' +
+                                                 '<h3 class="box-title">ข้อมูลบุตร '+parseInt(i+1)+'</h3>' +
+                                             '</div>' +
+                                             '<div class="box-body">' +
+                                                 '<div class="form-group">' +
+                                                     '<div class="row">' +
+                                                         '<div class="col-md-2">' +
+                                                             'ชื่อ' +
+                                                         '</div>' +
+                                                         '<div class="col-md-4">' +
+                                                            '@Html.TextBox("aa", "", new { @class = "form-control" })' +
+                                                 '</div>' +
+                                                 '<div class="col-md-2">' +
+                                                     'นามสกุล' +
+                                                 '</div>' +
+                                                 '<div class="col-md-4">' +
+                                                     '@Html.TextBox("aa", "", new { @class = "form-control" })' +
+                                                 '</div>' +
+                                             '</div>' +
+                                         '</div>' +
+                                         '<div class="form-group">' +
+                                             '<div class="row">' +
+                                                 '<div class="col-md-2">' +
+                                                     'อายุ' +
+                                                 '</div>' +
+                                                 '<div class="col-md-4">' +
+                                                     '@Html.TextBox("aa", "", new { @class = "form-control" })' +
+                                                 '</div>' +
+                                                 '<div class="col-md-2">' +
+                                                     'กำลังศึกษา' +
+                                                 '</div>' +
+                                                 '<div class="col-md-4">' +
+                                                    '<input type="radio" name="a"/> ใช่' +
+                                                    '<input type="radio" name="a" /> ไม่ใช่' +
+                                                 '</div>' +
+                                             '</div>' +
+                                         '</div>' +
+                                         '<div class="form-group">' +
+                                             '<div class="row">' +
+                                                 '<div class="col-md-2">' +
+                                                    'ระดับการศึกษา' +
+                                                 '</div>' +
+                                                 '<div class="col-md-4">' +
+                                                     '@Html.TextBox("aa", "", new { @class = "form-control" })' +
+                                                 '</div>' +
+                                                 '<div class="col-md-2">' +
+                                                     'สถานศึกษา' +
+                                                 '</div>' +
+                                                 '<div class="col-md-4">' +
+                                                     '@Html.TextBox("aa", "", new { @class = "form-control" })' +
+                                                 '</div>' +
+                                             '</div>' +
+                                         '</div>' +
+                                     '</div>' +
+                                 '</div>';
+        }
+         }else{
+
+            detail = "";
+
+            $('.submit_kid').hide();
+
+
+                }
+
+
+
+            $('.detailKid').html(
+
+                     detail
+
+              );
+
+
+    })
+</script>
+<script>
+    $(document).on('click', '.addStudy', function () {
+
+        var txt = '<div><div class="form-group">' +
+                                        '<div class="row">' +
+                                            '<div class="col-md-2">' +
+                                                'ปีการศึกษา' +
+                                            '</div>' +
+                                            '<div class="col-md-3">' +
+                                               ' @Html.TextBox("aa", "", new { @class = "form-control" })' +
+                                            '</div>' +
+                                            '<div class="col-md-7">' +
+                                               '<a class="btn btn-danger moveStudy"><i class="fa fa-trash"></i> ลบ</a>' +
+                                            '</div>' +
+                                        '</div>' +
+                                    '</div>' +
+                                    '<div class="form-group">' +
+                                        '<div class="row">' +
+
+                                            '<div class="col-md-2">' +
+                                                'สถานศึกษา' +
+                                            '</div>' +
+                                            '<div class="col-md-4">' +
+                                                '@Html.TextBox("aa", "", new { @class = "form-control" })' +
+                                            '</div>' +
+                                            '<div class="col-md-2">' +
+                                                'เกรดเฉลี่ย' +
+                                            '</div>' +
+                                            '<div class="col-md-3">' +
+                                                '@Html.TextBox("aa", "", new { @class = "form-control" })' +
+                                            '</div>' +
+                                        '</div>' +
+                                    '</div></div>';
+
+        $(".detailStudy").prepend(txt);
+
+
+
+        $('.submitStudy').show();
+
+
+    });
+    $(document).on('click', '.moveStudy', function () {
+
+
+        $(this).parent().parent().parent().parent().remove('div');
+
+        var len = $('.moveStudy').length;
+
+        if (len >= 1) {
+
+            $('.submitStudy').show();
+
+
+        } else {
+
+            $('.submitStudy').hide();
+        }
+
+
+
+    })
+</script>
+<script>
+    $(document).on('click', '.addWork', function () {
+
+        var txt = '<div><div class="form-group">' +
+                                        '<div class="row">' +
+                                            '<div class="col-md-2">' +
+                                                'ชื่อบริษัท' +
+                                            '</div>' +
+                                            '<div class="col-md-3">' +
+                                               ' @Html.TextBox("aa", "", new { @class = "form-control" })' +
+                                            '</div>' +
+                                            '<div class="col-md-7">' +
+                                               '<a class="btn btn-danger moveWork"><i class="fa fa-trash"></i> ลบ</a>' +
+                                            '</div>' +
+                                        '</div>' +
+                                    '</div>' +
+                                    '<div class="form-group">' +
+                                        '<div class="row">' +
+
+                                            '<div class="col-md-2">' +
+                                                'ที่อยู่' +
+                                            '</div>' +
+                                            '<div class="col-md-4">' +
+                                                '@Html.TextBox("aa", "", new { @class = "form-control" })' +
+                                            '</div>' +
+                                            '<div class="col-md-2">' +
+                                                'วันที่เริ่มงาน - วันที่ลาออก' +
+                                            '</div>' +
+                                            '<div class="col-md-3">' +
+                                                '@Html.TextBox("aa", "", new { @class = "form-control" })' +
+                                            '</div>' +
+                                        '</div>' +
+                                    '</div></div>';
+
+        $(".detailWork").prepend(txt);
+
+        $('.submitWork').show();
+
+    });
+    $(document).on('click', '.moveWork', function () {
+
+
+        $(this).parent().parent().parent().parent().remove('div');
+
+        var len = $('.moveWork').length;
+        if (len >= 1) {
+            $('.submitWork').show();
+
+        } else {
+
+            $('.submitWork').hide();
+        }
+
+    })
+</script>
+<script>
+    $(document).on('click', '.addTrain', function () {
+
+        var txt = '<div><hr/><div class="form-group">' +
+                                        '<div class="row">' +
+                                            '<div class="col-md-2">' +
+                                                'เรื่องที่อบรม' +
+                                            '</div>' +
+                                            '<div class="col-md-3">' +
+                                               ' @Html.TextBox("aa", "", new { @class = "form-control" })' +
+                                            '</div>' +
+                                            '<div class="col-md-7">' +
+                                               '<a class="btn btn-danger moveTrain"><i class="fa fa-trash"></i> ลบ</a>' +
+                                            '</div>' +
+                                        '</div>' +
+                                    '</div>' +
+                                    '<div class="form-group">' +
+                                        '<div class="row">' +
+
+                                            '<div class="col-md-2">' +
+                                                'สถานที่' +
+                                            '</div>' +
+                                            '<div class="col-md-4">' +
+                                                '@Html.TextBox("aa", "", new { @class = "form-control" })' +
+                                            '</div>' +
+                                            '<div class="col-md-2">' +
+                                                'วันที่อบรม' +
+                                            '</div>' +
+                                            '<div class="col-md-3">' +
+                                                '@Html.TextBox("aa", "", new { @class = "form-control" })' +
+                                            '</div>' +
+                                        '</div>' +
+                                    '</div></div>';
+
+        $(".detailTrain").prepend(txt);
+
+        $('.submitTrain').show();
+
+
+    });
+    $(document).on('click', '.moveTrain', function () {
+
+
+        $(this).parent().parent().parent().parent().remove('div');
+
+
+        var len = $('.moveTrain').length;
+
+        if (len >= 1) {
+
+            $('.submitTrain').show();
+        } else {
+
+            $('.submitTrain').hide();
+        }
+
+
+
+    })
+</script>
+<script>
+    $(document).on('click', '#Checkbox1', function () {
+
+
+       var check = $('#Checkbox1').prop('checked');
+
+       if (check == true) {
+
+           $('#add_num1').val($('#add_num').val());
+           $('#add_moo1').val($('#add_moo').val());
+           $('#add_type1').val($('#add_type').val());
+           $('#add_name1').val($('#add_name').val());
+           $('#add_alley1').val($('#add_alley').val());
+           $('#add_road1').val($('#add_road').val());
+           $('#add_district1').val($('#add_district').val());
+           $('#add_amphur1').val($('#add_amphur').val());
+           $('#add_province1').val($('#add_province').val());
+           $('#add_code1').val($('#add_code').val());
+
+       } else {
+
+           $('#add_num1').val('');
+           $('#add_moo1').val('');
+           $('#add_type1').val('');
+           $('#add_name1').val('');
+           $('#add_alley1').val('');
+           $('#add_road1').val('');
+           $('#add_district1').val('');
+           $('#add_amphur1').val('');
+           $('#add_province1').val('');
+           $('#add_code1').val('');
+
+
+       }
+
+       // alert(check);
+    })
+</script>
+<script>
+    $(document).on('click', '.', function () {
+        var prefix_th = $('#prefix_th').val();
+        var prefix_en = $('#prefix_en').val();
+        var name_th = $('#name_th').val();
+        var name_en = $('#name_en').val();
+        var lastname_th = $('#lastname_th').val();
+        var lastname_en = $('#lastname_en').val();
+        var gender = $('#gender').val();
+        var blood = $('#blood').val();
+        var national_id = $('#national_id').val();
+        var national_start = $('#national_start').val();
+        var national_end = $('#national_end').val();
+        var birthday = $('#birthday').val();
+        var nationality = $('#nationality').val();
+        var race = $('#race').val();
+        var marital = $('#marital').val();
+
+
+        $.get('../Personal/insertPersonal?prefix_th=' + prefix_th + "&name_th=" + name_th + "&lastname_th=" + lastname_th + "&prefix_en=" + prefix_en + "&name_en=" + name_en + "&lastname_en=" + lastname_en + "&gender=" + gender + "&blood=" + blood + "&national_id=" + national_id + "&national_start=" + national_start + "&national_end=" + national_end + "&birthday=" + birthday + "&nationality=" + nationality + "&race=" + race + "&marital=" + marital, function (data) {
+
+            alert("ok");
+
+        })
+
+
+    })
+</script>
+<script>
+    $(document).on('click', 'a[href="#step1"]', function () {
+
+
+        $.get('../../Personal/tabPerson?tab=step1', function(){
+
+        })
+
+     //   location.reload();
+
+    })
+    $(document).on('click', 'a[href="#step2"]', function () {
+
+
+
+        $.get('../../Personal/tabPerson?tab=step2', function () {
+
+        })
+
+       // location.reload();
+
+    })
+    $(document).on('click', 'a[href="#step3"]', function () {
+
+
+        $.get('../../Personal/tabPerson?tab=step3', function () {
+
+        })
+
+      //  location.reload();
+
+    })
+    $(document).on('click', 'a[href="#step4"]', function () {
+
+        $.get('../../Personal/tabPerson?tab=step4', function () {
+
+        })
+
+       // location.reload();
+
+    })
+    $(document).on('click', 'a[href="#step5"]', function () {
+
+        $.get('../../Personal/tabPerson?tab=step5', function () {
+
+        })
+
+      //  location.reload();
+
+    })
+    $(document).on('click', 'a[href="#step6"]', function () {
+
+        $.get('../../Personal/tabPerson?tab=step6', function () {
+
+        })
+
+      //  location.reload();
+
+    })
+    $(document).on('click', 'a[href="#step7"]', function () {
+
+        $.get('../../Personal/tabPerson?tab=step7', function () {
+
+        })
+
+        //  location.reload();
+
+    })
+    $(document).on('click', 'a[href="#step8"]', function () {
+
+        $.get('../../Personal/tabPerson?tab=step8', function () {
+
+        })
+
+        //  location.reload();
+
+    })
+</script>

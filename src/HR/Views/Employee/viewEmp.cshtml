@@ -1,0 +1,1093 @@
+﻿@{
+    Layout = "_Layout";
+}
+@using HR.Models
+<style>
+    .card.hovercard .cardheader {
+        background-image: url(../images/hrBG.jpg);
+        background-size: cover;
+        height: 135px;
+    }
+
+    .card.hovercard .avatar {
+        position: relative;
+        top: -50px;
+        margin-bottom: -50px;
+    }
+
+        .card.hovercard .avatar img {
+            width: 100px;
+            height: 100px;
+            max-width: 100px;
+            max-height: 100px;
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            border-radius: 50%;
+            border: 5px solid rgba(255,255,255,0.5);
+        }
+
+    .btn-file {
+        position: relative;
+        overflow: hidden;
+    }
+
+        .btn-file input[type=file] {
+            position: absolute;
+            top: 0;
+            right: 0;
+            min-width: 100%;
+            min-height: 100%;
+            font-size: 100px;
+            text-align: right;
+            filter: alpha(opacity=0);
+            opacity: 0;
+            outline: none;
+            background: white;
+            cursor: inherit;
+            display: block;
+        }
+
+    p {
+        font-size: 14px;
+    }
+
+    .panel {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.18);
+    }
+
+    .row {
+        margin-right: 0px;
+        margin-left: 0px;
+    }
+</style>
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">ข้อมูลพนักงาน</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-lg-4 col-md-5">
+            <div class="col-sm-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        พนักงาน
+                    </div>
+                    <div class="panel-body">
+                        <div class="card hovercard">
+                            <div class="cardheader">
+                            </div>
+                            <div class="avatar">
+                              
+                                <img id="imgEmp" name="imgEmp" alt="" src="@ViewData["profile_img"]">
+
+                            
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h5 style="color:gray;font-weight:bold" class="text-right">ข้อมูลพนักงาน </h5>
+                                <hr />
+                                <div class="data_emp">
+                                    <h5 style="color:cornflowerblue"><span class="btn btn-circle btn-success"><i class="fa fa-user"></i></span> รหัสพนักงาน / ชื่อ-นามสกุล</h5>
+                                    <blockquote>
+                                        <p> @ViewData["emp_code"] </p>
+                                        <p> @ViewData["emp_name_th"]</p>
+                                        <p> @ViewData["emp_name_en"]</p>
+                                    </blockquote>
+                                    <h5 style="color:cornflowerblue"> <span class="btn btn-circle btn-warning"><i class="fa fa-check"></i></span> สถานะ</h5>
+                                    <blockquote>
+                                        <p>   @ViewData["emp_status"]</p>
+                                    </blockquote>
+                                    <h5 style="color:cornflowerblue"><span class="btn btn-circle btn-primary"><i class="fa fa-calendar"></i></span>  วันที่เริ่มงาน</h5>
+                                    <blockquote>
+                                        <p> @ViewData["emp_start_date"]</p>
+                                    </blockquote>
+                                    <h5 style="color:cornflowerblue"><span class="btn btn-circle btn-danger"><i class="fa fa-calendar"></i></span>  วันที่ลาออก</h5>
+                                    <blockquote>
+                                        <p> @ViewData["emp_end_date"]</p>
+                                    </blockquote>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="panel-footer">
+
+                    </div>
+                </div>
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        ข้อมูลการติดต่อ <span class="contact_edit"></span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form_input_contact">
+
+                        </div>
+                        <div class="data_contact">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <h5 style="color:cornflowerblue"><span class="btn btn-primary btn-circle"><i class="fa fa-envelope"></i></span> E-mail</h5>
+                                        <blockquote>
+                                            <p>@ViewData["emp_email"]</p>
+                                        </blockquote>
+                                        <h5 style="color:cornflowerblue"><span class="btn btn-warning btn-circle"><i class="glyphicon glyphicon-phone-alt"></i></span> เบอร์โต๊ะ</h5>
+                                        <blockquote>
+                                            <p>@ViewData["emp_table"]</p>
+                                        </blockquote>
+                                        <h5 style="color:cornflowerblue"><span class="btn btn-success btn-circle"><i class="glyphicon glyphicon-earphone"></i></span> โทรศัพท์</h5>
+                                        <blockquote>
+                                            <p>@ViewData["emp_phone"]</p>
+                                        </blockquote>
+                                        <h5 style="color:cornflowerblue"><span class="btn btn-info btn-circle"><i class="glyphicon glyphicon-earphone"></i></span> มือถือ1</h5>
+                                        <blockquote>
+                                            <p>@ViewData["emp_mobile1"]</p>
+                                        </blockquote>
+                                        <h5 style="color:cornflowerblue"><span class="btn btn-info btn-circle"><i class="glyphicon glyphicon-earphone"></i></span> มือถือ2</h5>
+                                        <blockquote>
+                                            <p>@ViewData["emp_mobile2"]</p>
+                                        </blockquote>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                    </div>
+
+            </div>
+        </div>
+        </div>
+        <div class="col-lg-8 col-md-7">
+            <div class="col-lg-12">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                ข้อมูล
+                            </div>
+                            <!-- /.panel-heading -->
+                            <div class="panel-body">
+                                <!-- Nav tabs -->
+                                <ul class="nav nav-tabs">
+                                    <li class="active">
+                                        <a href="#position" data-toggle="tab">ข้อมูลตำแหน่งงาน</a>
+                                    </li>
+                                    <li>
+                                        <a href="#home" data-toggle="tab">ประวัติส่วนตัว</a>
+                                    </li>
+                                    <li>
+                                        <a href="#profile" data-toggle="tab">ข้อมูลเงินเดือน</a>
+                                    </li>
+                                    <li>
+                                        <a href="#messages" data-toggle="tab">กองทุนสำรองเลี้ยงชีพ</a>
+                                    </li>
+                                    <li>
+                                        <a href="#settings" data-toggle="tab">ชมเชย/ตักเตือน</a>
+                                    </li>
+                                </ul>
+                                <!-- Tab panes -->
+                                <div class="tab-content">
+                                    <div class="tab-pane fade in active" id="position">
+                                        <div class="form-group">
+                                            <h5 style="color:gray;font-weight:bold">ข้อมูลตำแหน่งงาน </h5>
+                                            <hr />
+
+                                        </div>
+
+                                        <br />
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <i class="fa fa-star fa-fw"></i> ตำแหน่งงาน
+                                            </div>
+                                            <!-- /.panel-heading -->
+                                            <div class="panel-body">
+                                                <ul class="timeline" style="left: -45%;">
+                                                    @foreach (var item in ViewData["position"] as List<emp_positionModel>)
+                                                    {
+                                                        <li class="timeline-inverted">
+                                                            <div class="timeline-badge warning" style="left: 48%;">
+                                                                <i class="fa fa-star"></i>
+                                                            </div>
+                                                            <div class="timeline-panel">
+                                                                <div class="timeline-heading">
+                                                                    <h5 class="timeline-title">ตำแหน่ง : @item.pos_position_name</h5>
+                                                                </div>
+                                                                <div class="timeline-body">
+                                                                    <p>ประเภท : @item.pos_type_name</p>
+                                                                    <p>แผนก : @item.pos_dept_name </p>
+                                                                    <p>ฝ่าย : @item.pos_sect_name</p>
+                                                                    <p>บริษัท : @item.pos_comp_name</p>
+                                                                </div>
+                                                             
+                                                            </div>
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            </div>
+
+                                        
+                                            <!-- /.panel-body -->
+                                        </div>
+
+                                    
+                                        <div class="form-group">
+                                            <h5 style="color:gray;font-weight:bold">ข้อมูลการทำงาน </h5>
+                                            <hr />
+                                        </div>
+
+                                    </div>
+
+                                    <div class="tab-pane fade" id="home">
+                                        <h5 style="color:gray;font-weight:bold">ข้อมูลส่วนตัว </h5>
+                                        <hr />
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <i class="fa fa-user fa-fw"></i> ข้อมูลส่วนตัว
+                                                    </div>
+                                                    <!-- /.panel-heading -->
+                                                    <div class="panel-body">
+                                                        <ul class="timeline" style="left: -45%;">
+                                                            <li class="timeline-inverted">
+                                                                <div class="timeline-badge success" style="left: 48%;">
+                                                                    <i class="fa fa-user"></i>
+                                                                </div>
+                                                                <div class="timeline-panel">
+                                                                    <div class="timeline-heading">
+                                                                        <h5 class="timeline-title">เพศ : @ViewData["gender"]</h5>
+                                                                    </div>
+                                                                    <div class="timeline-body">
+                                                                        <p>อายุ : @ViewData["age"] </p>
+                                                                        <p>กรุ๊บเลือด : @ViewData["blood"]</p>
+                                                                        <p>สัญชาติ : @ViewData["nationality"]</p>
+                                                                        <p>เชื้อชาติ : @ViewData["race"]</p>
+                                                                        <p>ศาสนา : @ViewData["religion"]</p>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li class="timeline-inverted">
+                                                                <div class="timeline-badge success" style="left: 48%;">
+                                                                    <i class="fa fa-user"></i>
+                                                                </div>
+                                                                <div class="timeline-panel">
+                                                                    <div class="timeline-heading">
+                                                                        <h5 class="timeline-title">วันเดือนปีเกิด : @ViewData["birthday"]</h5>
+                                                                    </div>
+                                                                    <div class="timeline-body">
+                                                                        <p>เลขประจำตัวประชาชน : @ViewData["identification"]</p>
+                                                                        <p>วันที่ออกบัตร : @ViewData["date_issue"]</p>
+                                                                        <p>วันหมดอายุ : @ViewData["expired_date"]</p>
+                                                                        <p>สถานภาพการสมรส : @ViewData["marital"]</p>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <!-- /.panel-body -->
+                                                  
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="clearfix"></div>
+                                        <h5 style="color:gray;font-weight:bold">ที่อยู่ </h5>
+                                        <hr />
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <i class="fa fa-home fa-fw"></i> ที่อยู่
+                                                    </div>
+                                                    <!-- /.panel-heading -->
+                                                    <div class="panel-body">
+                                                        <ul class="timeline" style="left: -45%;">
+                                                            <li class="timeline-inverted">
+                                                                <div class="timeline-badge warning" style="left: 48%;">
+                                                                    <i class="fa fa-user"></i>
+                                                                </div>
+                                                                <div class="timeline-panel">
+                                                                    <div class="timeline-heading">
+                                                                        <h5 class="timeline-title">ที่อยู่ตามทะเบียนบ้าน</h5>
+                                                                    </div>
+                                                                    <div class="timeline-body">
+                                                                        <p>เลขที่  : @ViewData["num"]  หมู่ : @ViewData["moo"] </p>
+                                                                        <p>ชื่อ : @ViewData["name"]  ประเภทที่พัก : @ViewData["type"]</p>
+                                                                        <p>ซอย : @ViewData["alley"]  ถนน : @ViewData["road"]</p>
+                                                                        <p>ตำบล/แขวง : @ViewData["district_name"] อำเภอ/เขต : @ViewData["amphur_name"] </p>
+                                                                        <p>จังหวัด : @ViewData["province_name"]  @ViewData["postcode"] </p>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li class="timeline-inverted">
+                                                                <div class="timeline-badge warning" style="left: 48%;">
+                                                                    <i class="fa fa-user"></i>
+                                                                </div>
+                                                                <div class="timeline-panel">
+                                                                    <div class="timeline-heading">
+                                                                        <h5 class="timeline-title">ที่อยู่ที่ติดต่อได้</h5>
+                                                                    </div>
+                                                                    <div class="timeline-body">
+                                                                        <p>เลขที่  : @ViewData["num_call"]  หมู่ : @ViewData["moo_call"] </p>
+                                                                        <p>ชื่อ : @ViewData["name_call"]  ประเภทที่พัก : @ViewData["type_call"]</p>
+                                                                        <p>ซอย : @ViewData["alley_call"]  ถนน : @ViewData["road_call"]</p>
+                                                                        <p>ตำบล/แขวง : @ViewData["district_name_call"] อำเภอ/เขต : @ViewData["amphur_name_call"] </p>
+                                                                        <p>จังหวัด : @ViewData["province_name_call"]  @ViewData["postcode_call"] </p>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <!-- /.panel-body -->
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+
+                                        
+
+                                        <br />
+                                        <div class="clearfix"></div>
+                                        <h5 style="color:gray;font-weight:bold">การศึกษา</h5>
+                                        <hr />
+                                        <div class="row">
+                                            <div class="col-lg-12">
+
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <i class="fa fa-graduation-cap fa-fw"></i> ประวัติการศึกษา
+                                                    </div>
+                                                    <!-- /.panel-heading -->
+                                                    <div class="panel-body">
+                                                        <ul class="timeline" style="left: -45%;">
+                                                            @foreach (var item_study in ViewData["data_study"] as List<personal_studyModel>)
+                                                            {
+                                                                <li class="timeline-inverted">
+                                                                    <div class="timeline-badge success" style="left: 48%;">
+                                                                        <i class="fa fa-graduation-cap"></i>
+                                                                    </div>
+                                                                    <div class="timeline-panel">
+                                                                        <div class="timeline-heading">
+                                                                            <h5 class="timeline-title">ปีการศึกษา : @item_study.study_year</h5>
+                                                                        </div>
+                                                                        <div class="timeline-body">
+                                                                            <p>เกรดเฉลี่ย : @item_study.study_gpa</p>
+                                                                            <p>วุฒิการศึกษา : @item_study.study_degree</p>
+                                                                            <p>สาขา/คณะ : @item_study.study_branch</p>
+                                                                            <p>สถานศึกษา : @item_study.study_academy</p>
+                                                                            <p></p>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+
+                                                            }
+                                                        </ul>
+                                                    </div>
+                                                    <!-- /.panel-body -->
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="clearfix"></div>
+                                        <h5 style="color:gray;font-weight:bold">การทำงาน</h5>
+                                        <hr />
+                                        <div class="row">
+                                            <div class="col-lg-12">
+
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <i class="fa fa-star fa-fw"></i> ประวัติการทำงาน
+                                                    </div>
+                                                    <!-- /.panel-heading -->
+                                                    <div class="panel-body">
+                                                        <ul class="timeline" style="left: -45%;">
+                                                            @foreach (var item_work in ViewData["data_work"] as List<personal_workModel>)
+                                                            {
+                                                                <li class="timeline-inverted">
+                                                                    <div class="timeline-badge warning" style="left: 48%;">
+                                                                        <i class="fa fa-star"></i>
+                                                                    </div>
+                                                                    <div class="timeline-panel">
+                                                                        <div class="timeline-heading">
+                                                                            <h5 class="timeline-title">ตำแหน่ง : @item_work.work_position</h5>
+                                                                        </div>
+                                                                        <div class="timeline-body">
+                                                                            <p>เริ่มทำงาน : @item_work.work_start</p>
+                                                                            <p>ลาออก : @item_work.work_end</p>
+                                                                            <p>บริษัท : @item_work.work_company</p>
+                                                                            <p>ที่อยู่บริษัท : @item_work.work_address</p>
+                                                                            <p></p>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+
+                                                            }
+                                                        </ul>
+                                                    </div>
+                                                    <!-- /.panel-body -->
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <br />
+                                        <div class="clearfix"></div>
+                                        <h5 style="color:gray;font-weight:bold">การฝึกอบรม</h5>
+                                        <hr />
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <i class="glyphicon glyphicon-book fa-fw"></i> ประวัติการฝึกอบรม
+                                                    </div>
+                                                    <!-- /.panel-heading -->
+                                                    <div class="panel-body">
+                                                        <ul class="timeline" style="left: -45%;">
+                                                            @foreach (var item_train in ViewData["data_train"] as List<personal_trainModel>)
+                                                            {
+                                                                <li class="timeline-inverted">
+                                                                    <div class="timeline-badge success" style="left: 48%;">
+                                                                        <i class="glyphicon glyphicon-book"></i>
+                                                                    </div>
+                                                                    <div class="timeline-panel">
+                                                                        <div class="timeline-heading">
+                                                                            <h5 class="timeline-title">อบรมเรื่อง : @item_train.train_title</h5>
+                                                                        </div>
+                                                                        <div class="timeline-body">
+                                                                            <p>สถานที่ : @item_train.train_location</p>
+                                                                            <p>วันที่เริ่มอบรม : @item_train.train_start</p>
+                                                                            <p>วันที่สิ้นสุดการอบรม : @item_train.train_end</p>
+                                                                            <p></p>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+
+                                                            }
+                                                        </ul>
+                                                    </div>
+                                                    <!-- /.panel-body -->
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="clearfix"></div>
+                                        <h5 style="color:gray;font-weight:bold">สถานะทางครอบครัวและบุคคลอ้างอิง</h5>
+                                        <hr />
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <i class="glyphicon glyphicon-user fa-fw"></i> สถานะทางครอบครัวและบุคคลอ้างอิง
+                                                    </div>
+                                                    <!-- /.panel-heading -->
+                                                    <div class="panel-body">
+                                                        <ul class="timeline" style="left: -45%;">
+
+                                                            <li class="timeline-inverted">
+                                                                <div class="timeline-badge warning" style="left: 48%;">
+                                                                    <i class="glyphicon glyphicon-user"></i>
+                                                                </div>
+                                                                <div class="timeline-panel">
+                                                                    <div class="timeline-heading">
+                                                                        <h5 class="timeline-title">สถานะ : พ่อ</h5>
+                                                                    </div>
+                                                                    <div class="timeline-body">
+                                                                        <p>ชื่อ-นามสกุล : @ViewData["dad_name"]</p>
+                                                                        <p>อายุ : @ViewData["dad_age"]</p>
+                                                                        <p>โทรศัพท์ : @ViewData["dad_tel"]</p>
+                                                                        <p>มือถือ : @ViewData["dad_mobile"]</p>
+                                                                        <p>ที่อยู่ : @ViewData["dad_address"]</p>
+                                                                        <p></p>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li class="timeline-inverted">
+                                                                <div class="timeline-badge warning" style="left: 48%;">
+                                                                    <i class="glyphicon glyphicon-user"></i>
+                                                                </div>
+                                                                <div class="timeline-panel">
+                                                                    <div class="timeline-heading">
+                                                                        <h5 class="timeline-title">สถานะ : แม่</h5>
+                                                                    </div>
+                                                                    <div class="timeline-body">
+                                                                        <p>ชื่อ-นามสกุล : @ViewData["mom_name"]</p>
+                                                                        <p>อายุ : @ViewData["mom_age"]</p>
+                                                                        <p>โทรศัพท์ : @ViewData["mom_tel"]</p>
+                                                                        <p>มือถือ : @ViewData["mom_mobile"]</p>
+                                                                        <p>ที่อยู่ : @ViewData["mom_address"]</p>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li class="timeline-inverted">
+                                                                <div class="timeline-badge warning" style="left: 48%;">
+                                                                    <i class="glyphicon glyphicon-user"></i>
+                                                                </div>
+                                                                <div class="timeline-panel">
+                                                                    <div class="timeline-heading">
+                                                                        <h5 class="timeline-title">สถานะ : คู่สมรส</h5>
+                                                                    </div>
+                                                                    <div class="timeline-body">
+                                                                        <p>ชื่อ-นามสกุล : @ViewData["marry_name"]</p>
+                                                                        <p>อายุ : @ViewData["marry_age"]</p>
+                                                                        <p>โทรศัพท์ : @ViewData["marry_tel"]</p>
+                                                                        <p>มือถือ : @ViewData["marry_mobile"]</p>
+                                                                        <p>ที่อยู่ : @ViewData["marry_address"]</p>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+
+                                                        </ul>
+                                                    </div>
+                                                    <!-- /.panel-body -->
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="clearfix"></div>
+                                        <h5 style="color:gray;font-weight:bold">ข้อมูลบุตร</h5>
+                                        <hr />
+                                        <div class="row">
+                                            <div class="col-sm-12">
+
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <i class="fa fa-child fa-fw"></i> ข้อมูลบุตร
+                                                    </div>
+                                                    <!-- /.panel-heading -->
+                                                    <div class="panel-body">
+                                                        <ul class="timeline" style="left: -45%;">
+                                                            @foreach (var item_child in ViewData["data_child"] as List<personal_kidModel>)
+                                                            {
+                                                                <li class="timeline-inverted">
+                                                                    <div class="timeline-badge success" style="left: 48%;">
+                                                                        <i class="fa fa-child"></i>
+                                                                    </div>
+                                                                    <div class="timeline-panel">
+                                                                        <div class="timeline-heading">
+                                                                            <h5 class="timeline-title">ชื่อ-นามสกุล : @item_child.kid_name  @item_child.kid_lastname</h5>
+                                                                        </div>
+                                                                        <div class="timeline-body">
+                                                                            <p>อายุ : @item_child.kid_age</p>
+                                                                            <p>สถานะการศึกษา : @item_child.kid_study_status</p>
+                                                                            <p>ระดับการศึกษา : @item_child.kid_study_level</p>
+                                                                            <p>สถานศึกษา : @item_child.kid_study_school</p>
+                                                                            <p></p>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+
+                                                            }
+                                                        </ul>
+                                                    </div>
+                                                    <!-- /.panel-body -->
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="profile">
+                                        <div class="form-group">
+                                            <h5 style="color:gray;font-weight:bold">รายได้</h5>
+                                            <hr />
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                   
+                                                   
+                                                    <!---collaps-->
+                                                    <div>
+                                                        <div class="form-group">
+                                                            <div class="row">
+                                                                <div class="col-lg-12">
+                                                                    <div class="panel panel-default">
+                                                                        <div class="panel-heading">
+                                                                            รายได้
+                                                                        </div>
+                                                                        <!-- .panel-heading -->
+                                                                        <div class="panel-body">
+                                                                            <div class="panel-group" id="accordion">
+                                                                                @{ int i = 0;}
+                                                                                @foreach (var item in ViewData["data_pay"] as List<emp_payModel>)
+                                                                                {
+                                                                                    <div class="panel panel-default">
+                                                                                        <div class="panel-heading">
+                                                                                            <h4 class="panel-title">
+                                                                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse_@i" aria-expanded="false" class="collapsed valcap">@item.pay_start_date - @item.pay_end_date</a>
+                                                                                            </h4>
+                                                                                        </div>
+                                                                                        <div id="collapse_@i" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                                                                                            <div class="panel-body">
+
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    i++;
+                                                                                }
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- .panel-body -->
+                                                        </div>
+                                                        <!-- /.panel -->
+                                                    </div>
+                                                    <!---end collapse-->
+                                                </div>
+                                            </div>
+                                        </div>
+                                       
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <h5 style="color:gray;font-weight:bold">รายการหัก</h5>
+                                                <hr />
+                                            </div>
+                                        </div>
+                                  
+                                     
+                                        <div>
+                                            <br />
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="panel panel-default">
+                                                            <div class="panel-heading">
+                                                                รายการหัก
+                                                            </div>
+                                                            <!-- .panel-heading -->
+                                                            <div class="panel-body">
+                                                                <div class="panel-group" id="accordion">
+                                                                    @{ int j = 0;}
+                                                                    @foreach (var item_minus in ViewData["data_minus"] as List<emp_minusSalaryModel>)
+                                                                    {
+                                                                        <div class="panel panel-default">
+                                                                            <div class="panel-heading">
+                                                                                <h4 class="panel-title">
+                                                                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapsej_@j" aria-expanded="false" class="collapsed valcapj">@item_minus.ms_start_date - @item_minus.ms_end_date</a>
+                                                                                </h4>
+                                                                            </div>
+                                                                            <div id="collapsej_@j" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                                                                                <div class="panel-body">
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        j++;
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                       
+                                    </div>
+                                    <div class="tab-pane fade" id="messages">
+
+                                        <h5 style="color:gray;font-weight:bold">กองทุนสำรองเลี้ยงชีพ</h5>
+                                        <hr />
+                                       
+                                       
+                                        <div class="data_fund">
+                                            <br />
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <table class="table table-responsive table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>ลำดับ</th>
+                                                                    <th>กองทุนสำรองเลี้ยงชีพ</th>
+                                                                    <th>วันที่เข้าร่วม</th>
+                                                                    <th>จัดการ</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @{ int countFund = 1;}
+                                                                @foreach (var item in ViewData["data_fund"] as List<emp_fundRegisModel>)
+                                                                {
+                                                                    <tr>
+                                                                        <td>@countFund</td>
+                                                                        <td>@item.fr_fund_name</td>
+                                                                        <td>@item.fr_date_start</td>
+                                                                        
+                                                                    </tr>
+                                                                    countFund++;
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                      
+                                    </div>
+                                    <div class="tab-pane fade" id="settings">
+                                        <div class="col-lg-6 col-md-6">
+                                            <h5 style="color:gray;font-weight:bold">ชมเชย</h5>
+                                            <hr />
+                                          
+                                            <div class="data_commend">
+
+                                                @foreach (var item in ViewData["data_commend"] as List<emp_commendModel>)
+                                                {
+                                                    <div class="panel panel-warning">
+                                                        <div class="panel-heading">
+                                                            <div class="row">
+                                                                <div class="col-sm-6">
+                                                                    <p class="text-left">เรื่อง : @item.comm_title</p>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <p class="text-right">วันที่ : @item.comm_date</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="panel-body">
+                                                            <p>@item.comm_detail</p>
+                                                        </div>
+                                                       
+                                                    </div>
+                                                }
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="col-lg-6 col-md-6">
+                                            <h5 style="color:gray;font-weight:bold">ตักเตือน</h5>
+                                            <hr />
+                                           
+                                            <div class="data_admonish">
+                                                @foreach (var item in ViewData["data_admonish"] as List<emp_admonishModel>)
+                                                {
+                                                    <div class="panel panel-danger">
+                                                        <div class="panel-heading">
+                                                            <div class="row">
+                                                                <div class="col-sm-6">
+                                                                    <p class="text-left">เรื่อง : @item.adm_title</p>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <p class="text-right">วันที่ : @item.adm_date</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="panel-body">
+                                                            <p>@item.adm_detail</p>
+                                                        </div>
+                                                      
+                                                    </div>
+                                                }
+                                            </div>
+                                           
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.panel-body -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+<script src="~/lib/jquery/dist/jquery-3.2.1.min.js"></script>
+<script>
+    $(document).on('click', '.valcap', function () {
+
+        var aa = $(this).attr('href');
+        var txt = $(this).text();
+
+        var res = txt.split('-');
+        var month = "";
+        var month_end = "";
+        var dt_start = res[0];
+        var dt_end = res[1];
+
+        var res_start = dt_start.split(' ');
+        var res_end = dt_end.split(' ');
+
+
+        var i = 0;
+           
+        if (res_start[1] == "มกราคม") {
+
+            month = "01";
+
+        } else if (res_start[1] == "กุมภาพันธ์") {
+
+            month = "02";
+
+        } else if (res_start[1] == "มีนาคม") {
+
+            month = "03";
+
+        } else if (res_start[1] == "เมษายน") {
+
+            month = "04";
+
+        } else if (res_start[1] == "พฤษภาคม") {
+
+            month = "05";
+
+        } else if (res_start[1] == "มิถุนายน") {
+
+            month = "06";
+
+        } else if (res_start[1] == "กรกฎาคม") {
+
+            month = "07";
+
+        } else if (res_start[1] == "สิงหาคม") {
+
+            month = "08";
+
+        } else if (res_start[1] == "กันยายน") {
+
+            month = "09";
+
+        } else if (res_start[1] == "ตุลาคม") {
+
+            month = "10";
+
+        } else if (res_start[1] == "พฤศจิกายน") {
+
+            month = "11";
+
+        } else if (res_start[1] == "ธันวาคม") {
+
+            month = "12";
+
+        }
+
+        ////
+
+        if (res_end[2] == "มกราคม") {
+
+            month_end = "01";
+
+        } else if (res_end[2] == "กุมภาพันธ์") {
+
+            month_end = "02";
+
+        } else if (res_end[2] == "มีนาคม") {
+
+            month_end = "03";
+
+        } else if (res_end[2] == "เมษายน") {
+
+            month_end = "04";
+
+        } else if (res_end[2] == "พฤษภาคม") {
+
+            month_end = "05";
+
+        } else if (res_end[2] == "มิถุนายน") {
+
+            month_end = "06";
+
+        } else if (res_end[2] == "กรกฎาคม") {
+
+            month_end = "07";
+
+        } else if (res_end[2] == "สิงหาคม") {
+
+            month_end = "08";
+
+        } else if (res_end[2] == "กันยายน") {
+
+            month_end = "09";
+
+        } else if (res_end[2] == "ตุลาคม") {
+
+            month_end = "10";
+
+        } else if (res_end[2] == "พฤศจิกายน") {
+
+            month_end = "11";
+
+        } else if (res_end[2] == "ธันวาคม") {
+
+            month_end = "12";
+
+        }
+           
+        var start = res_start[0] + "-" + month + "-" + res_start[2];
+        var end = res_end[1] + "-" + month_end + "-" + res_end[3];
+
+        $.get('../Pay/getdata?start=' + start + "&end=" + end + "&emp=" + @ViewData["emp_id"], function (data) {
+
+             
+            $('' + aa + '').html("<table  class='table table-responsive table-bordered'>" +
+                        "<tr><th>ลำดับ</th><th>รายการ</th><th>รวม</th><th style='display: none;'>จัดการ</th></tr>" +
+                        data +
+                        "</table>");
+
+
+            var len =  $(''+aa+'').find('table').eq(0).find('tr').length;
+
+            var loop = 1;
+
+            for(loop = 1; loop <len; loop++){
+
+                $(''+aa+'').find('table').eq(0).find('tr').eq(loop).find('td').eq(3).hide();
+            }
+         
+        })
+
+       
+
+    })
+</script>
+<script>
+    $(document).on('click', '.valcapj', function () {
+
+        var aa = $(this).attr('href');
+        var txt = $(this).text();
+
+        var res = txt.split('-');
+        var month = "";
+        var month_end = "";
+        var dt_start = res[0];
+        var dt_end = res[1];
+
+        var res_start = dt_start.split(' ');
+        var res_end = dt_end.split(' ');
+
+
+        var i = 0;
+
+        if (res_start[1] == "มกราคม") {
+
+            month = "01";
+
+        } else if (res_start[1] == "กุมภาพันธ์") {
+
+            month = "02";
+
+        } else if (res_start[1] == "มีนาคม") {
+
+            month = "03";
+
+        } else if (res_start[1] == "เมษายน") {
+
+            month = "04";
+
+        } else if (res_start[1] == "พฤษภาคม") {
+
+            month = "05";
+
+        } else if (res_start[1] == "มิถุนายน") {
+
+            month = "06";
+
+        } else if (res_start[1] == "กรกฎาคม") {
+
+            month = "07";
+
+        } else if (res_start[1] == "สิงหาคม") {
+
+            month = "08";
+
+        } else if (res_start[1] == "กันยายน") {
+
+            month = "09";
+
+        } else if (res_start[1] == "ตุลาคม") {
+
+            month = "10";
+
+        } else if (res_start[1] == "พฤศจิกายน") {
+
+            month = "11";
+
+        } else if (res_start[1] == "ธันวาคม") {
+
+            month = "12";
+
+        }
+
+        ////
+
+        if (res_end[2] == "มกราคม") {
+
+            month_end = "01";
+
+        } else if (res_end[2] == "กุมภาพันธ์") {
+
+            month_end = "02";
+
+        } else if (res_end[2] == "มีนาคม") {
+
+            month_end = "03";
+
+        } else if (res_end[2] == "เมษายน") {
+
+            month_end = "04";
+
+        } else if (res_end[2] == "พฤษภาคม") {
+
+            month_end = "05";
+
+        } else if (res_end[2] == "มิถุนายน") {
+
+            month_end = "06";
+
+        } else if (res_end[2] == "กรกฎาคม") {
+
+            month_end = "07";
+
+        } else if (res_end[2] == "สิงหาคม") {
+
+            month_end = "08";
+
+        } else if (res_end[2] == "กันยายน") {
+
+            month_end = "09";
+
+        } else if (res_end[2] == "ตุลาคม") {
+
+            month_end = "10";
+
+        } else if (res_end[2] == "พฤศจิกายน") {
+
+            month_end = "11";
+
+        } else if (res_end[2] == "ธันวาคม") {
+
+            month_end = "12";
+
+        }
+
+        var start = res_start[0] + "-" + month + "-" + res_start[2];
+        var end = res_end[1] + "-" + month_end + "-" + res_end[3];
+
+        $.get('../Minus/getdata?start=' + start + "&end=" + end + "&emp=" + @ViewData["emp_id"], function (data) {
+
+
+            $('' + aa + '').html("<table class='table table-responsive table-bordered'>" +
+                        "<tr><th>ลำดับ</th><th>รายการ</th><th>รวม</th><th style='display:none;'>จัดการ</th></tr>" +
+                        data +
+                        "</table>");
+            var len =  $(''+aa+'').find('table').eq(0).find('tr').length;
+
+            var loop = 1;
+
+            for(loop = 1; loop <len; loop++){
+
+                $(''+aa+'').find('table').eq(0).find('tr').eq(loop).find('td').eq(3).hide();
+            }
+
+        })
+
+    })
+</script>
+

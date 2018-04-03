@@ -1,0 +1,60 @@
+﻿@{
+    Layout = "_Layout";
+}
+@using HR.Models
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">บริษัท</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <div class="form-group">
+        @*<div class="row">
+            <div class="col-sm-12 text-right">
+                <a class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> เพิ่มฝ่าย</a>
+            </div>
+        </div>*@
+    </div>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        บริษัท
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table id="datatable" class="table dataTable table-responsive">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center">ลำดับ</th>
+                                                <th class="text-center">ชื่อบริษัท</th>
+                                                <th class="text-center">ที่อยู่</th>
+                                                <th class="text-center">โทรศัพท์</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="text-center">
+                                            @{ int i = 1;}
+                                            @foreach (var item in ViewData["company"] as List<companyModel>)
+                                            {
+                                           <tr>
+                                               <td>@i</td>
+                                               <td>@item.T_Company</td>
+                                               <td>@item.Address @item.addr_no  @item.addr_moo @item.addr_lane  @item.addr_road  @item.addr_district @item.addr_amphur  @item.addr_province</td>
+                                               <td>@item.Tel</td>
+                                           </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   

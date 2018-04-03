@@ -1,0 +1,215 @@
+﻿@{
+    Layout = "_Layout";
+}
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">แก้ไข การลาออกของพนักงาน</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        แก้ไข การลาออกของพนักงาน
+                    </div>
+                    <div class="panel-body">
+                        @{ Html.BeginForm("update_resign", "EmpResign", FormMethod.Post);}
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                รหัสหนักงาน
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.DropDownList("emp", ViewData["emp"] as List<SelectListItem>, new { @class = "form-control select2", @style = "width:100%", @onchange = "empChange();" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <p>ข้อมูลพนักงาน</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                ชื่อ-นามสกุล
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("emp_name", "", new { @class = "form-control", @readonly = true })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                ตำแหน่ง
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("emp_position", "", new { @class = "form-control", @readonly = true })
+                                            </div>
+                                            <div class="col-md-2">
+                                                บริษัท
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("emp_company", "", new { @class = "form-control", @readonly = true })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                ฝ่าย
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("emp_section", "", new { @class = "form-control", @readonly = true })
+                                            </div>
+                                            <div class="col-md-2">
+                                                แผนก
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("emp_department", "", new { @class = "form-control", @readonly = true })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                วันที่เริ่มงาน
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("emp_start", "", new { @class = "form-control", @readonly = true })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <p>ข้อมูลการลาออก</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                วันที่ลาออก
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBox("emp_resign_date", Convert.ToDateTime(ViewData["re_resign_date"]).ToString("d/MM/yyyy"), new { @class = "form-control datepicker" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                ประเภทการลาออก
+                                            </div>
+                                            <div class="col-md-10">
+                                                @{ bool check1, check2, check3;}
+                                                @if (ViewData["re_type"].ToString() == "RS")
+                                                {
+                                                    check1 = true;
+                                                    check2 = false;
+                                                    check3 = false;
+
+                                                }
+                                                else if(ViewData["re_type"].ToString() == "RT") {
+
+                                                    check1 = false;
+                                                    check2 = true;
+                                                    check3 = false;
+
+                                                }
+                                                else {
+
+                                                    check1 = false;
+                                                    check2 = false;
+                                                    check3 = true;
+
+                                                }
+                                            
+                                                <input type="radio" value="RS" id="type" name="type" checked="@check1" /> ลาออก
+                                                <input type="radio" value="RT" id="type" name="type" checked="@check2" /> เกษียณ
+                                                <input type="radio" value="OT" id="type" name="type" checked="@check3" /> อื่นๆ
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                สาเหตุการลาออก
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextArea("detail", ViewData["re_detail"].ToString(), new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.TextBox("re_id",ViewData["re_id"],new { @class="form-control", @type="hidden"})
+                                    @Html.TextBox("emp_id", ViewData["emp_id"], new { @class = "form-control", @type="hidden" })
+                                    <hr />
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-12 text-center">
+                                                <a class="btn btn-default">ยกเลิก</a>
+                                                <button type="submit" class="btn btn-primary"><span><i class="fa fa-save"></i></span> บันทึกข้อมูล</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @{ Html.EndForm();}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery-3.2.1.min.js"></script>
+    <script>
+        $(window).ready(function () {
+
+            var x = $('#emp_id').val();
+
+            emp(x);
+
+        })
+    </script>
+    <script>
+        function emp($x) {
+
+            $.get('../../Employee/select_data_resign?id=' + $x, function (data) {
+
+                var res = data.split('^');
+                $('#emp_name').val(res[0]);
+                $('#emp_position').val(res[1]);
+                $('#emp_company').val(res[2]);
+                $('#emp_section').val(res[3]);
+                $('#emp_department').val(res[4]);
+                $('#emp_start').val(res[5]);
+
+            })
+
+
+        }
+    </script>
+    <script>
+       
+        function empChange() {
+
+            var x = document.getElementById("emp").value;
+
+            emp(x);
+        }
+    </script>
+

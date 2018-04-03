@@ -1,0 +1,139 @@
+﻿@{
+    Layout = "_Layout";
+}
+@using HR.Models
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">ข้อมูลการลาออกของพนักงาน</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-sm-12 text-right">
+                <a href="@Url.Action("addResign","Employee")" class="btn btn-primary"><span><i class="fa fa-plus-square-o"></i>  บันทึกการลาออกของพนักงาน</span></a>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        ประวัติการลาออกของพนักงาน
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-responsive dataTable">
+                                           <thead>
+                                               <tr>
+                                                   <th>ลำดับ</th>
+                                                   <th>รหัสพนักงาน</th>
+                                                   <th>ชื่อ-นามสกุล</th>
+                                                   <th>ตำแหน่ง</th>
+                                                   <th>บริษัท</th>
+                                                   <th>ฝ่าย</th>
+                                                   <th>แผนก</th>
+                                                   <th>วันที่เริ่มงาน</th>
+                                                   <th>วันที่ลาออก</th>
+                                                   <th>ประเภทการลาออก</th>
+                                                   <th>เหตุผลที่ลาออก</th>
+                                                   <th><span><i class="fa fa-gears"></i>  จัดการ</span></th>
+                                               </tr>
+                                           </thead>
+                                           <tbody>
+                                               @{ int i = 1;}
+                                               @foreach(var item in ViewData["data_resign"] as List<view_employeeModel>)
+                                               {
+                                               <tr>
+                                                   <td>@i</td>
+                                                   <td>@item.ep_code</td>
+                                                   <td>@item.ps_name_full</td>
+                                                   <td>@item.post_name</td>
+                                                   <td>@item.T_Company</td>
+                                                   <td>@item.Section_name</td>
+                                                   <td>@item.dept_name</td>
+                                                   <td>@item.ep_start</td>
+                                                   <td>@item.ep_end</td>
+                                                   @if (item.type_resign == "RS")
+                                                   {
+
+                                                    <td>ลาออก</td>
+                                                   }
+                                                   else if (item.type_resign == "RT")
+                                                   {
+                                                    <td>เกษียณ</td>
+
+                                                   }
+                                                   else
+                                                   {
+                                                    <td>อื่นๆ</td>
+
+                                                   }
+                                              
+                                                   <td>@item.detail_resign</td>
+                                                   <td class="text-center">
+                                                       <div>
+                                                           <a href="@Url.Action("viewEmp","Employee",new { code= item.ep_id})" class="btn btn-primary"><span><i class="fa fa-search"></i> ดูประวัติการเป็นพนักงาน</span></a>
+                                                       </div>
+                                                       <br />
+                                                       @if (Convert.ToDateTime(item.submit_resign).ToString("yyyy-MM") == DateTime.Now.ToString("yyyy-MM"))
+                                                       {
+                                                        <div class="">
+                                                            <a class="btn btn-warning" href="@Url.Action("editResign","Employee",new { id=item.resign_id})"><span><i class="fa fa-edit"></i> แก้ไข</span></a>
+                                                            <a class="btn btn-danger delResign" ref="@item.resign_id"><span><i class="fa fa-trash"></i> ลบ</span></a>
+                                                        </div>
+                                                       }
+                                                      
+                                                   </td>
+                                               </tr>
+                                                   i++;
+                                               }
+                                           </tbody>
+                                        </table>
+                                    </div>
+                                    </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+    <script src="~/lib/jquery/dist/jquery-3.2.1.min.js"></script>
+    <script>
+        $(document).on('click', '.delResign', function () {
+
+        var x = $(this).attr('ref');
+
+        swal({
+            title: "คุณต้องการลบข้อมูลนี้ใช่หรือไม่?",
+            text: "สถานะการลาออกของพนักงานจะถูกยกเลิกให้เป็นปกติ!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "red",
+            confirmButtonText: "ใช่, ลบข้อมูล",
+            cancelButtonText: "ไม่, ยกเลิกการลบ!",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        },
+        function (isConfirm) {
+            if (isConfirm) {
+
+                $.get('../../EmpResign/del_resign?id=' + x, function () {
+
+                    swal("ลบข้อมูลเรียบร้อย!", "", "success");
+                    location.reload();
+                })
+
+            } else {
+                swal("ยกเลิก", "", "error");
+            }
+        });
+
+    });
+    </script>      

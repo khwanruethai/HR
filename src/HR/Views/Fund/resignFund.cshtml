@@ -1,0 +1,171 @@
+﻿@{
+    Layout = "_Layout";
+}
+@using HR.Models
+@using System.Globalization
+@{
+    CultureInfo en = new CultureInfo("EN");
+}
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">ประวัติการลาออกจากกองทุนของพนักงาน</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-sm-12 text-right">
+                <a href="@Url.Action("addResignFund","Fund")" class="btn btn-primary"><span><i class="fa fa-plus-square-o"></i>  บันทึกการลาออกจากกองทุนของพนักงาน</span></a>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        ประวัติการลาออกจากกองทุนของพนักงาน
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-responsive dataTable">
+                                            <thead>
+                                                <tr>
+                                                    <th rowspan="2" class="text-center">ลำดับ</th>
+                                                    <th colspan="6" class="text-center">ข้อมูลพนักงาน</th>
+                                                    <th colspan="7" class="text-center">ข้อมูลกองทุน</th>
+                                                    <th rowspan="2" style="border-width: 1px;" class="text-center"><span><i class="fa fa-gears"></i></span> จัดการ</th>
+                                                </tr>
+                                                <tr>
+                                                    <th class="text-center">รหัสพนักงาน</th>
+                                                    <th class="text-center">ชื่อ-นามสกุล</th>
+                                                    <th class="text-center">ตำแหน่ง</th>
+                                                    <th class="text-center">บริษัท</th>
+                                                    <th class="text-center">ฝ่าย</th>
+                                                    <th class="text-center">แผนก</th>
+                                                    <th class="text-center">รหัสกองทุน</th>
+                                                    <th class="text-center">ชื่อกองทุน</th>
+                                                    <th class="text-center">วันที่เข้าร่วม</th>
+                                                    <th class="text-center">วันที่ลาออก</th>
+                                                    <th class="text-center">ประเภทการลาออก</th>
+                                                    <th class="text-center">เหตุผลการลาออก</th>
+                                                    <th class="text-center">อายุสมาชิก(วัน)</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @{ int i = 1;}
+                                                @foreach (var item in ViewData["fundResign"] as List<empFundResign>)
+                                                {
+                                              <tr>
+                                                  <td class="text-center">@i</td>
+                                                  <td class="text-center">@item.emp_code</td>
+                                                  <td class="text-center">@item.emp_name</td>
+                                                  <td class="text-center">@item.emp_position</td>
+                                                  <td class="text-center">@item.emp_cpmp</td>
+                                                  <td class="text-center">@item.emp_sect</td>
+                                                  <td class="text-center">@item.emp_dept</td>
+                                                  <td class="text-center">@item.fund_code</td>
+                                                  <td class="text-center">@item.fund_name</td>
+                                                  <td class="text-center">@item.fnr_start_date</td>
+                                                  <td class="text-center">@item.fnr_resign_date</td>
+                                                  @if (item.fnr_type_resign == "RS")
+                                                  {
+                                                    <td class="text-center">ลาออก</td>
+
+                                                  }
+                                                  else if (item.fnr_type_resign == "RT")
+                                                  {
+                                                    <td class="text-center">เกษียณ</td>
+
+                                                  }
+                                                  else
+                                                  {
+                                                    <td class="text-center">อื่นๆ</td>
+                                                  }
+
+
+                                                 
+                                                  <td class="text-center">@item.fnr_detail_resign</td>
+                                                  <td class="text-center">@item.age</td>
+                                                  <td class="text-center">
+                                                      <div class="form-group responsive">
+                                                          <div class="row">
+                                                              <div class="col-md-12">
+                                                                  <a class="btn btn-primary" href="@Url.Action("emp","Employee",new { code = item.emp_id})"><i class="fa fa-search"></i> ดูข้อมูลพนักงาน</a><br />
+                                                              </div>
+                                                             
+                                                          </div>
+                                                      </div>
+                                                      @*<div class="form-group responsive">
+                                                          <div class="row">
+                                                         
+                                                              <div class="col-md-12">
+                                                                  <a class="btn btn-info"><i class="fa fa-search"></i> ดูรายละเอียดกองทุน</a><br />
+                                                              </div>
+                                                          </div>
+                                                      </div>*@
+                                                     
+                                                    @*@if(Convert.ToInt32(Convert.ToDateTime(item.fnr_submit_date).ToString("yyyyMM", en)) < Convert.ToInt32(DateTime.Now.ToString("yyyyMM",en)))
+                                                    {
+
+                                                    }
+                                                    else
+                                                    {
+
+                                                        <a class="btn btn-warning"><i class="fa fa-edit"></i> แก้ไข</a>
+                                                        <a class="btn btn-danger"><i class="fa fa-trash"></i> ลบ</a>
+
+                                                    }*@
+
+                                                  </td>
+                                              </tr>
+                                                    i++;
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/lib/jquery/dist/jquery-3.2.1.min.js"></script>
+    @*<script>
+        $(document).on('click', '.delResign', function () {
+
+        var x = $(this).attr('ref');
+
+        swal({
+            title: "คุณต้องการลบข้อมูลนี้ใช่หรือไม่?",
+            text: "สถานะการลาออกของพนักงานจะถูกยกเลิกให้เป็นปกติ!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "red",
+            confirmButtonText: "ใช่, ลบข้อมูล",
+            cancelButtonText: "ไม่, ยกเลิกการลบ!",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        },
+        function (isConfirm) {
+            if (isConfirm) {
+
+                $.get('../../EmpResign/del_resign?id=' + x, function () {
+
+                    swal("ลบข้อมูลเรียบร้อย!", "", "success");
+                    location.reload();
+                })
+
+            } else {
+                swal("ยกเลิก", "", "error");
+            }
+        });
+
+    });
+    </script>*@

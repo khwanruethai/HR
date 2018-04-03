@@ -1,0 +1,239 @@
+﻿@{
+    Layout = "_Layout";
+}
+@using HR.Models
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">ประเภทรายได้</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-sm-12 text-right">
+                <a class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> เพิ่มประเภทรายได้</a>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        ประเภทรายได้
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table id="datatable" class="table dataTable table-responsive">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center">ลำดับ</th>
+                                                <th class="text-center">ประเภทรายได้</th>
+                                                <th class="text-center">จัดการ</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="text-center">
+                                            @{ int i = 1;}
+                                            @foreach (var item in ViewData["income"] as List<info_incomeModel>) {
+                                            <tr>
+                                                <td>@i</td>
+                                                <td>@item.income_name</td>
+                                                <td>
+                                                    <a class="btn btn-primary viewIncome" data-toggle="modal" data-target="#myModalViewIncome" ref="@item.income_id"><i class="fa fa-search"></i> ดูรายละเอียด</a>
+                                                    <a class="btn btn-warning editIncome" data-toggle="modal" data-target="#myModalEditIncome" ref="@item.income_id"><i class="fa fa-edit"></i> แก้ไขข้อมูล</a>
+                                                    <a class="btn btn-danger delIncome" ref="@item.income_id"><i class="fa fa-trash"></i> ลบ</a>
+                                                </td>
+                                            </tr>
+                                                i++;
+                                            }
+                                           
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @{ Html.BeginForm("income", "Information", FormMethod.Post);}
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">ประเภทรายได้</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                รายได้
+                            </div>
+                            <div class="col-sm-9">
+                                @Html.TextBox("income", "", new { @class = "form-control", @placeholder = "ระบุประเภทรายได้", @required = "true" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                ผู้บันทึกข้อมูล
+                            </div>
+                            <div class="col-sm-9">
+                                @Html.TextBox("admin", "ขวัญฤทัย  เสมอกลาง", new { @class = "form-control", @readonly = "true" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer text-center">
+                    <div class="text-center">
+                        <input type="submit" class="btn btn-primary" value="บันทึกข้อมูล" />
+                        <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @{ Html.EndForm();}
+<!----->
+    @{ Html.BeginForm("editIncome","Information",FormMethod.Post);}
+    <div class="modal fade" id="myModalEditIncome" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">ประเภทรายได้</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                รายได้
+                            </div>
+                            <div class="col-sm-9">
+                                @Html.TextBox("income_edit", "", new { @class = "form-control", @placeholder = "ระบุประเภทรายได้", @required = "true" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                ผู้บันทึกข้อมูล
+                            </div>
+                            <div class="col-sm-9">
+                                @Html.TextBox("admin", "ขวัญฤทัย  เสมอกลาง", new { @class = "form-control", @readonly = "true" })
+                                @Html.TextBox("income_id","",new { @class="form-control", @type="hidden"})
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer text-center">
+                    <div class="text-center">
+                        <input type="submit" class="btn btn-primary" value="บันทึกข้อมูล" />
+                        <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @{ Html.EndForm();}
+<!----->
+    <!----->
+    <div class="modal fade" id="myModalViewIncome" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">ประเภทรายได้</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                รายได้
+                            </div>
+                            <div class="col-sm-9 income_view">
+                            
+                            </div>
+                        </div>
+                    </div>
+                   
+                </div>
+                <div class="modal-footer text-center">
+                    <div class="text-center">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!----->
+    <script src="~/lib/jquery/dist/jquery-3.2.1.min.js"></script>
+    <script>
+        $(document).on('click', '.editIncome', function () {
+
+            var x = $(this).attr('ref');
+            $('#income_id').val(x);
+
+            $.get('../../Information/getIncome?income=' + x, function (data) {
+
+
+                $('#income_edit').val(data);
+
+            })
+
+
+        })
+        $(document).on('click', '.viewIncome', function () {
+
+            var x = $(this).attr('ref');
+
+            $.get('../../Information/getIncome?income=' + x, function (data) {
+
+
+                $('.income_view').text(data);
+
+            })
+
+        })
+    </script>
+    <script>
+        $(document).on('click', '.delIncome', function () {
+
+
+            var x = $(this).attr('ref');
+            swal({
+                title: "คุณต้องการลบข้อมูลนี้ใช่หรือไม่?",
+                //text: "You will not be able to recover this imaginary file!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "red",
+                confirmButtonText: "ใช่, ลบข้อมูล!",
+                cancelButtonText: "ไม่, ยกเลิก",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            },
+            function (isConfirm) {
+                if (isConfirm) {
+
+                    $.get('../../Information/del_income?id=' + x, function () {
+
+                        swal("ลบข้อมูลเรียบร้อยแล้ว!", "", "success");
+                        location.reload();
+                    })
+
+
+
+                } else {
+
+                    swal("ยกเลิกแล้ว", "", "error");
+                }
+            });
+
+        })
+    </script>

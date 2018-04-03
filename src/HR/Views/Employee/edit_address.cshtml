@@ -1,0 +1,245 @@
+﻿<div class="col-lg-12">
+    <div class="col-md-6 col-lg-6">
+        <br />
+        ที่อยู่ตามทะเบียนบ้าน
+        <hr />
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-2">
+                    เลขที่
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBox("add_num", "", new { @class = "form-control" })
+                </div>
+                <div class="col-md-2">
+                    หมู่ที่
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBox("add_moo", "", new { @class = "form-control" })
+                </div>
+
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-2">
+                    ประเภทที่พัก
+                </div>
+                <div class="col-md-10">
+                    @*@Html.TextBox("add_type", "", new { @class = "form-control" })*@
+                    @Html.DropDownList("add_type", new List<SelectListItem> {
+                                                   new SelectListItem { Value="0", Text="เลือกประเภทที่พัก"},
+                                                   new SelectListItem { Value="home", Text="บ้าน"},
+                                                   new SelectListItem { Value = "dorm", Text = "หอพัก" },
+                                                   new SelectListItem { Value = "apartment", Text = "อพาร์ทเม้นท์"},
+                                                   new SelectListItem { Value = "etc", Text = "อื่นๆ"}
+                                               }
+                                                 , new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-2">
+                    ชื่อ
+                </div>
+                <div class="col-md-10">
+                    @Html.TextBox("add_name", "", new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-2">
+                    ซอย
+                </div>
+                <div class="col-md-10">
+                    @Html.TextBox("add_alley", "", new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-2">
+                    ถนน
+                </div>
+                <div class="col-md-10">
+                    @Html.TextBox("add_road", "", new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-2">
+                    จังหวัด
+                </div>
+                <div class="col-md-10">
+                    @*@Html.TextBox("add_province", "", new { @class = "form-control" })*@
+                    @Html.DropDownList("add_province", ViewData["province"] as List<SelectListItem>, new { @class = "form-control select2", @style = "width:100%", @onchange = "myFunctionProvince()" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-2">
+                    เขต/อำเภอ
+                </div>
+                <div class="col-md-10">
+                    @*@Html.TextBox("add_amphur", "", new { @class = "form-control" })*@
+                    @*@Html.DropDownList("add_amphur", ViewData["amphur"] as List<SelectListItem>, new { @class="form-control select2", @style = "width:100%" })*@
+                    <div class="amphur"> @Html.DropDownList("add_amphur", ViewData["amphur"] as List<SelectListItem>, new { @class = "form-control select2", @style = "width:100%", @onchange = "myFunctionAmphur()" })</div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-2">
+                    แขวง/ตำบล
+                </div>
+                <div class="col-md-10">
+                    @*@Html.TextBox("add_district", "", new { @class = "form-control" })*@
+                    @*@Html.DropDownList("add_district", ViewData["district"] as List<SelectListItem>, new { @class = "form-control select2", @style = "width:100%" })*@
+                    <div class="district">
+                        @Html.DropDownList("add_district", new List<SelectListItem>
+                                                                                    {new SelectListItem { Selected = true, Text = "เลือกแขวง/ตำบล", Value = "1"}
+                                                                                    }, new { @class = "form-control select2", @style = "width:100%" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-2">
+                    รหัสไปรษณีย์
+                </div>
+                <div class="col-md-10">
+                    @Html.TextBox("add_code", "", new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="col-md-6 col-lg-6">
+        <br />
+        <span>ที่อยู่ที่ติดต่อได้ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="Checkbox1" type="checkbox" /> ที่อยู่ที่ติดต่อได้ตรงกับที่อยู่ตามทำเบียนบ้าน </span>
+    
+        <hr />
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-2">
+                    เลขที่
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBox("add_num1", "", new { @class = "form-control" })
+                </div>
+                <div class="col-md-2">
+                    หมู่ที่
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBox("add_moo1", "", new { @class = "form-control" })
+                </div>
+
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-2">
+                    ประเภทที่พัก
+                </div>
+                <div class="col-md-10">
+                    @*@Html.TextBox("add_type1", "", new { @class = "form-control" })*@
+                    @Html.DropDownList("add_type1", new List<SelectListItem> {
+                                                    new SelectListItem { Value="0", Text="เลือกประเภทที่พัก"},
+                                                   new SelectListItem { Value="home", Text="บ้าน"},
+                                                   new SelectListItem { Value = "dorm", Text = "หอพัก" },
+                                                   new SelectListItem { Value = "apartment", Text = "อพาร์ทเม้นท์"},
+                                                   new SelectListItem { Value = "etc", Text = "อื่นๆ"}
+                                               }
+                                                 , new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-2">
+                    ชื่อ
+                </div>
+                <div class="col-md-10">
+                    @Html.TextBox("add_name1", "", new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-2">
+                    ซอย
+                </div>
+                <div class="col-md-10">
+                    @Html.TextBox("add_alley1", "", new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-2">
+                    ถนน
+                </div>
+                <div class="col-md-10">
+                    @Html.TextBox("add_road1", "", new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-2">
+                    จังหวัด
+                </div>
+                <div class="col-md-10">
+                    @*@Html.TextBox("add_province1", "", new { @class = "form-control" })*@
+                    @Html.DropDownList("add_province1", ViewData["province"] as List<SelectListItem>, new { @class = "form-control select2", @style = "width:100%", @onchange = "myFunctionProvince1()" })
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-2">
+                    เขต/อำเภอ
+                </div>
+                <div class="col-md-10">
+                    @*@Html.TextBox("add_amphur1", "", new { @class = "form-control" })*@
+                    @*@Html.DropDownList("add_amphur1",ViewData["amphur"] as List<SelectListItem>, new { @class="form-control select2", @style = "width:100%" })*@
+                    <div class="amphur1"> @Html.DropDownList("add_amphur1", ViewData["amphur"] as List<SelectListItem>, new { @class = "form-control select2", @style = "width:100%", @onchange = "myFunctionAmphur()" })</div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-2">
+                    แขวง/ตำบล
+                </div>
+                <div class="col-md-10">
+                    @* @Html.TextBox("add_district1", "", new { @class = "form-control" })*@
+                    @*@Html.DropDownList("add_district1", ViewData["district"] as List<SelectListItem>, new { @class = "form-control select2", @style = "width:100%" })*@
+                    <div class="district1">
+                        @Html.DropDownList("add_district1", new List<SelectListItem>
+                                                                                    {new SelectListItem { Selected = true, Text = "เลือกแขวง/ตำบล", Value = "1"}
+                                                                                    }, new { @class = "form-control select2", @style = "width:100%" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-2">
+                    รหัสไปรษณีย์
+                </div>
+                <div class="col-md-10">
+                    @Html.TextBox("add_code1", "", new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
